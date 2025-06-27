@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "28DOcpgB0CM=",
+  "dgSpecHash": "ZAW43F83Pyc=",
   "success": true,
   "projectFilePath": "C:\\Users\\Sistema - Asstramed\\Desktop\\Pessoal\\Dev\\1_PROJETOS\\InfoHub\\infohub-backend\\InfoHubApplication\\InfoHubApplication.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Sistema - Asstramed\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\Sistema - Asstramed\\.nuget\\packages\\microsoft.entityframeworkcore\\8.0.13\\microsoft.entityframeworkcore.8.0.13.nupkg.sha512",
     "C:\\Users\\Sistema - Asstramed\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\8.0.13\\microsoft.entityframeworkcore.abstractions.8.0.13.nupkg.sha512",
     "C:\\Users\\Sistema - Asstramed\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\8.0.13\\microsoft.entityframeworkcore.analyzers.8.0.13.nupkg.sha512",

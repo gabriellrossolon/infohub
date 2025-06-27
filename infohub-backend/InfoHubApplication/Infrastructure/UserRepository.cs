@@ -1,8 +1,9 @@
 ﻿using InfoHubApplication.Models;
+using System.Linq;
 
 namespace InfoHubApplication.Infrastructure
 {
-    public class UserRepository : IRepository<User>
+    public class UserRepository : IUserRepository
     {
         private readonly DbConnectionContext _context = new DbConnectionContext();
 
@@ -15,6 +16,11 @@ namespace InfoHubApplication.Infrastructure
         public List<User> Get()
         {
             return _context.Users.ToList();
+        }
+
+        public User FindByEmail(string email)
+        {
+            return _context.Users.FirstOrDefault(u => u.Email == email);
         }
     }
 }

@@ -87,7 +87,7 @@
     "Parameters": [
       {
         "Name": "userInput",
-        "Type": "InfoHubApplication.Models.User",
+        "Type": "UserViewModel",
         "IsRequired": true
       }
     ],
@@ -101,6 +101,22 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "InfoHubApplication.Controllers.UserController",
+    "Method": "Login",
+    "RelativePath": "api/v1/user/login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "loginData",
+        "Type": "LoginViewModel",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   }
 ]
