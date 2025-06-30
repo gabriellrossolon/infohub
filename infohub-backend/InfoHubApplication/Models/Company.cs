@@ -3,19 +3,16 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace InfoHubApplication.Models
 {
-    [Table("enterprises")]
-    public class Enterprise
+    [Table("companies")]
+    public class Company
     {
         [Key]
         public int Id { get; private set; }
         public string Name { get; private set; }
-        public DateTime CreationDate { get; private set; }
-        public int CompanyId { get; set; }
 
-        public Enterprise(string name, DateTime creationDate)
+        public Company(string name)
         {
             this.Name = name ?? throw new ArgumentNullException(nameof(name));
-            this.CreationDate = creationDate;
         }
     }
 }

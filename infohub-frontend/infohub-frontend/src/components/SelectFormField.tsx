@@ -2,9 +2,9 @@ import React from "react";
 
 interface SelectFormFieldProps {
   name: string;
-  value: string;
+  value: string | number;
   onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-  options: string[];
+  options: (string | { id: number; label: string })[];
 }
 
 const SelectFormField: React.FC<SelectFormFieldProps> = ({
@@ -22,12 +22,24 @@ const SelectFormField: React.FC<SelectFormFieldProps> = ({
         className="text-white/80 py-1 px-2 border-1 rounded-md border-white/50 min-w-[25vw]"
         required
       >
-        
-        {options.map((option) => (
-          <option className="text-black" key={option} value={option}>
-            {option.charAt(0).toUpperCase() + option.slice(1)}
-          </option>
-        ))}
+        <option disabled value="">
+          Selecione
+        </option>
+        {options.map((option, index) => {
+          if (typeof option === "string") {
+            return (
+              <option className="text-black" key={index} value={option}>
+                {option.charAt(0).toUpperCase() + option.slice(1)}
+              </option>
+            );
+          } else {
+            return (
+              <option className="text-black" key={option.id} value={option.id}>
+                {option.label}
+              </option>
+            );
+          }
+        })}
       </select>
     </label>
   );

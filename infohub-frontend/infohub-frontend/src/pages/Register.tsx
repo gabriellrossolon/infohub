@@ -2,6 +2,7 @@ import FormField from "../components/FormField";
 import SelectFormField from "../components/SelectFormField";
 import type { UserRole } from "../types/roles";
 import { USER_ROLES } from "../types/roles";
+import { USER_COMPANIES } from "../types/companies";
 
 import { useState } from "react";
 
@@ -12,12 +13,13 @@ const Register: React.FC<RegisterProps> = ({}) => {
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [userRepeatedPassword, setUserRepeatedPassword] = useState("");
+  const [userCompany, setUserCompany] = useState<number | "">("");
   const [userRole, setUserRole] = useState<UserRole | "">("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!userName || !userEmail || !userPassword || !userRole) {
+    if (!userName || !userEmail || !userPassword || !userCompany || !userRole) {
       alert("Preencha todos os campos!");
       return;
     }
@@ -31,8 +33,11 @@ const Register: React.FC<RegisterProps> = ({}) => {
       name: userName,
       email: userEmail,
       password: userPassword,
+      companyId: userCompany,
       role: userRole,
     };
+
+    console.log(userData)
 
     try {
       const response = await fetch("https://localhost:7103/api/v1/user", {
@@ -91,7 +96,12 @@ const Register: React.FC<RegisterProps> = ({}) => {
               value={userRepeatedPassword}
               onChangeFunc={(e) => setUserRepeatedPassword(e.target.value)}
             />
-
+            <SelectFormField
+              name="Empresa Principal"
+              value={userCompany}
+              onChange={(e) => setUserCompany(Number(e.target.value))}
+              options={USER_COMPANIES}
+            />
             <SelectFormField
               name="Permissão"
               value={userRole}

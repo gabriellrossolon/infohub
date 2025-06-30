@@ -28,7 +28,7 @@ namespace InfoHubApplication.Controllers
                 return Conflict(new { message = "Já existe um usuário com esse Email!" });
             }
 
-            var user = new User(userInput.Name, userInput.Email, userInput.Password, userInput.Role);
+            var user = new User(userInput.Name, userInput.Email, userInput.Password, userInput.Role, userInput.CompanyId);
 
             _userRepository.Add(user);
 
@@ -37,7 +37,8 @@ namespace InfoHubApplication.Controllers
                 id = user.Id,
                 name = user.Name,
                 email = user.Email,
-                role = user.Role
+                role = user.Role,
+                companyId = user.CompanyId,
             });
         }
 

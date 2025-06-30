@@ -24,6 +24,7 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IRepository<Message>, MessageRepository>();
 builder.Services.AddTransient<IRepository<Group>, GroupRepository>();
 builder.Services.AddTransient<IRepository<Enterprise>, EnterpriseRepository>();
+builder.Services.AddTransient<IRepository<Company>, CompanyRepository>();
 
 var app = builder.Build();
 

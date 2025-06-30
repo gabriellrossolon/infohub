@@ -6,6 +6,7 @@ namespace InfoHubApplication.Infrastructure
     public class DbConnectionContext : DbContext
     {
         public DbSet<User> Users { get; set; }
+        public DbSet<Company> Companies { get; set; }
         public DbSet<Enterprise> Enterprises { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<Message> Messages { get; set; }

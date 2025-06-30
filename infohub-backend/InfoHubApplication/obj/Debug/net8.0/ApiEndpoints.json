@@ -1,5 +1,31 @@
 [
   {
+    "ContainingType": "InfoHubApplication.Controllers.CompanyController",
+    "Method": "Add",
+    "RelativePath": "api/v1/company",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "companyInput",
+        "Type": "InfoHubApplication.Models.Company",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "InfoHubApplication.Controllers.CompanyController",
+    "Method": "Get",
+    "RelativePath": "api/v1/company",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "InfoHubApplication.Controllers.EnterpriseController",
     "Method": "Add",
     "RelativePath": "api/v1/enterprise",
