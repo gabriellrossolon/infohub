@@ -46,3 +46,11 @@ C:\Users\Sistema - Asstramed\Desktop\Pessoal\Dev\1_PROJETOS\InfoHub\infohub-back
 C:\Users\Sistema - Asstramed\Desktop\Pessoal\Dev\1_PROJETOS\InfoHub\infohub-backend\InfoHubApplication\obj\Debug\net8.0\ref\InfoHubApplication.dll
 C:\Users\Sistema - Asstramed\Desktop\Pessoal\Dev\1_PROJETOS\InfoHub\infohub-backend\InfoHubApplication\bin\Debug\net8.0\BCrypt.Net-Next.dll
 C:\Users\Sistema - Asstramed\Desktop\Pessoal\Dev\1_PROJETOS\InfoHub\infohub-backend\InfoHubApplication\obj\Debug\net8.0\InfoHubApplication.sourcelink.json
+C:\Users\Sistema - Asstramed\Desktop\Pessoal\Dev\1_PROJETOS\InfoHub\infohub-backend\InfoHubApplication\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\Sistema - Asstramed\Desktop\Pessoal\Dev\1_PROJETOS\InfoHub\infohub-backend\InfoHubApplication\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\Sistema - Asstramed\Desktop\Pessoal\Dev\1_PROJETOS\InfoHub\infohub-backend\InfoHubApplication\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\Sistema - Asstramed\Desktop\Pessoal\Dev\1_PROJETOS\InfoHub\infohub-backend\InfoHubApplication\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\Sistema - Asstramed\Desktop\Pessoal\Dev\1_PROJETOS\InfoHub\infohub-backend\InfoHubApplication\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\Sistema - Asstramed\Desktop\Pessoal\Dev\1_PROJETOS\InfoHub\infohub-backend\InfoHubApplication\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\Sistema - Asstramed\Desktop\Pessoal\Dev\1_PROJETOS\InfoHub\infohub-backend\InfoHubApplication\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\Sistema - Asstramed\Desktop\Pessoal\Dev\1_PROJETOS\InfoHub\infohub-backend\InfoHubApplication\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll

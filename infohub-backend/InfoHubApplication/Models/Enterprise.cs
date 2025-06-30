@@ -15,7 +15,7 @@ namespace InfoHubApplication.Models
         public Enterprise(string name, int companyId)
         {
             this.Name = name ?? throw new ArgumentNullException(nameof(name));
-            this.CreationDate = DateTime.Now;
+            this.CreationDate = DateTime.UtcNow;
             this.CompanyId = companyId;
         }
     }

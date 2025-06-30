@@ -1,5 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using InfoHubApplication.Models;
+﻿using InfoHubApplication.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace InfoHubApplication.Controllers
 {
@@ -13,7 +14,7 @@ namespace InfoHubApplication.Controllers
         {
             _userRepository = userRepository;
         }
-
+        [Authorize]
         [HttpPost]
         public IActionResult Add([FromForm] UserViewModel userViewModel)
         {
@@ -41,14 +42,14 @@ namespace InfoHubApplication.Controllers
                 companyId = user.CompanyId,
             });
         }
-
+        [Authorize]
         [HttpGet]
         public IActionResult Get()
         {
             var users = _userRepository.Get();
             return Ok(users);
         }
-
+        [Authorize]
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginViewModel loginData)
         {

@@ -1,5 +1,26 @@
 [
   {
+    "ContainingType": "InfoHubApplication.Controllers.AuthController",
+    "Method": "Auth",
+    "RelativePath": "api/v1/auth",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "password",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "InfoHubApplication.Controllers.CompanyController",
     "Method": "Add",
     "RelativePath": "api/v1/company",

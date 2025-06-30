@@ -16,7 +16,7 @@ namespace InfoHubApplication.Models
         {
             this.Name = name ?? throw new ArgumentNullException(nameof(name));
             this.EnterpriseId = enterpriseId;
-            this.CreationDate = DateTime.Now;
+            this.CreationDate = DateTime.UtcNow;
         }
     }
 }

@@ -20,7 +20,7 @@ namespace InfoHubApplication.Models
             this.UserId = userId;
             this.MessageCategory = messageCategory;
             this.MessageContent = messageContent;
-            this.SendTime = DateTime.Now;
+            this.SendTime = DateTime.UtcNow;
         }
     }
 }

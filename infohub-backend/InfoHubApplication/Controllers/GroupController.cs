@@ -1,5 +1,6 @@
 ﻿using InfoHubApplication.Models;
 using InfoHubApplication.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InfoHubApplication.Controllers
@@ -14,7 +15,7 @@ namespace InfoHubApplication.Controllers
         {
             _groupRepository = groupRepository;
         }
-
+        [Authorize]
         [HttpPost]
         public IActionResult Add([FromBody] GroupViewModel groupViewModel)
         {
@@ -29,7 +30,7 @@ namespace InfoHubApplication.Controllers
 
             return Ok();
         }
-
+        [Authorize]
         [HttpGet]
         public IActionResult Get()
         {

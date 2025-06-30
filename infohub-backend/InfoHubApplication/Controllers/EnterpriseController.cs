@@ -1,4 +1,5 @@
 ﻿using InfoHubApplication.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InfoHubApplication.Controllers
@@ -13,7 +14,7 @@ namespace InfoHubApplication.Controllers
         {
             _enterpriseRepository = enterpriseRepository;
         }
-
+        [Authorize]
         [HttpPost]
         public IActionResult Add([FromBody] EnterpriseViewModel enterpriseViewModel)
         {
@@ -28,7 +29,7 @@ namespace InfoHubApplication.Controllers
 
             return Ok();
         }
-
+        [Authorize]
         [HttpGet]
         public IActionResult Get()
         {
