@@ -15,20 +15,20 @@ namespace InfoHubApplication.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add([FromBody] UserViewModel userInput)
+        public IActionResult Add([FromForm] UserViewModel userViewModel)
         {
-            if(userInput == null)
+            if(userViewModel == null)
             {
                 return BadRequest("User data is null");
             }
 
-            var existingUser = _userRepository.FindByEmail(userInput.Email);
+            var existingUser = _userRepository.FindByEmail(userViewModel.Email);
             if (existingUser != null)
             {
                 return Conflict(new { message = "Já existe um usuário com esse Email!" });
             }
 
-            var user = new User(userInput.Name, userInput.Email, userInput.Password, userInput.Role, userInput.CompanyId);
+            var user = new User(userViewModel.Name, userViewModel.Email, userViewModel.Password, userViewModel.Role, userViewModel.CompanyId);
 
             _userRepository.Add(user);
 

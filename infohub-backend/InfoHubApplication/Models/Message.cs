@@ -14,13 +14,13 @@ namespace InfoHubApplication.Models
         public string MessageContent { get; private set; }
         public DateTime SendTime { get; private set; }
 
-        public Message(int groupId, int userId, string messageCategory, string messageContent, DateTime sendTime)
+        public Message(int groupId, int userId, string messageCategory, string messageContent)
         {
             this.GroupId = groupId;
             this.UserId = userId;
             this.MessageCategory = messageCategory;
             this.MessageContent = messageContent;
-            this.SendTime = sendTime;
+            this.SendTime = DateTime.Now;
         }
     }
 }

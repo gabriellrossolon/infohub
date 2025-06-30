@@ -1,4 +1,5 @@
 ﻿using InfoHubApplication.Models;
+using InfoHubApplication.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InfoHubApplication.Controllers
@@ -15,14 +16,14 @@ namespace InfoHubApplication.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add([FromBody] Message messageInput)
+        public IActionResult Add([FromBody] MessageViewModel messageViewModel)
         {
-            if (messageInput == null)
+            if (messageViewModel == null)
             {
                 return BadRequest("Message data is null");
             }
 
-            var message = new Message(messageInput.GroupId, messageInput.UserId, messageInput.MessageCategory, messageInput.MessageContent, messageInput.SendTime);
+            var message = new Message(messageViewModel.GroupId, messageViewModel.UserId, messageViewModel.MessageCategory, messageViewModel.MessageContent);
 
             _messageRepository.Add(message);
 

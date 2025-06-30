@@ -15,14 +15,14 @@ namespace InfoHubApplication.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add([FromBody] Enterprise enterpriseInput)
+        public IActionResult Add([FromBody] EnterpriseViewModel enterpriseViewModel)
         {
-            if (enterpriseInput == null)
+            if (enterpriseViewModel == null)
             {
                 return BadRequest("Enterprise data is null");
             }
 
-            var enterprise = new Enterprise(enterpriseInput.Name, enterpriseInput.CreationDate);
+            var enterprise = new Enterprise(enterpriseViewModel.Name, enterpriseViewModel.CompanyId);
 
             _enterpriseRepository.Add(enterprise);
 

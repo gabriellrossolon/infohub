@@ -8,8 +8,8 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "companyInput",
-        "Type": "InfoHubApplication.Models.Company",
+        "Name": "companyViewModel",
+        "Type": "CompanyViewModel",
         "IsRequired": true
       }
     ],
@@ -34,8 +34,8 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "enterpriseInput",
-        "Type": "InfoHubApplication.Models.Enterprise",
+        "Name": "enterpriseViewModel",
+        "Type": "EnterpriseViewModel",
         "IsRequired": true
       }
     ],
@@ -60,8 +60,8 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "groupInput",
-        "Type": "InfoHubApplication.Models.Group",
+        "Name": "groupViewModel",
+        "Type": "InfoHubApplication.ViewModel.GroupViewModel",
         "IsRequired": true
       }
     ],
@@ -86,8 +86,8 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "messageInput",
-        "Type": "InfoHubApplication.Models.Message",
+        "Name": "messageViewModel",
+        "Type": "InfoHubApplication.ViewModel.MessageViewModel",
         "IsRequired": true
       }
     ],
@@ -112,9 +112,29 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "userInput",
-        "Type": "UserViewModel",
-        "IsRequired": true
+        "Name": "Name",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Email",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Password",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Role",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "CompanyId",
+        "Type": "System.Int32",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []

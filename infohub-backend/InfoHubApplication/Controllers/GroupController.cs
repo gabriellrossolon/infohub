@@ -1,4 +1,5 @@
 ﻿using InfoHubApplication.Models;
+using InfoHubApplication.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InfoHubApplication.Controllers
@@ -15,14 +16,14 @@ namespace InfoHubApplication.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add([FromBody] Group groupInput)
+        public IActionResult Add([FromBody] GroupViewModel groupViewModel)
         {
-            if (groupInput == null)
+            if (groupViewModel == null)
             {
                 return BadRequest("Group data is null");
             }
 
-            var group = new Group(groupInput.Name, groupInput.EnterpriseId, groupInput.CreationDate);
+            var group = new Group(groupViewModel.Name, groupViewModel.EnterpriseId);
 
             _groupRepository.Add(group);
 

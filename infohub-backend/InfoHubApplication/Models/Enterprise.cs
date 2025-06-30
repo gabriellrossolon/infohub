@@ -12,10 +12,11 @@ namespace InfoHubApplication.Models
         public DateTime CreationDate { get; private set; }
         public int CompanyId { get; set; }
 
-        public Enterprise(string name, DateTime creationDate)
+        public Enterprise(string name, int companyId)
         {
             this.Name = name ?? throw new ArgumentNullException(nameof(name));
-            this.CreationDate = creationDate;
+            this.CreationDate = DateTime.Now;
+            this.CompanyId = companyId;
         }
     }
 }

@@ -16,14 +16,14 @@ namespace InfoHubApplication.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add([FromBody] Company companyInput)
+        public IActionResult Add([FromBody] CompanyViewModel companyViewModel)
         {
-            if (companyInput == null)
+            if (companyViewModel == null)
             {
                 return BadRequest("Company data is null");
             }
 
-            var company = new Company(companyInput.Name);
+            var company = new Company(companyViewModel.Name);
 
             _companyRepository.Add(company);
 

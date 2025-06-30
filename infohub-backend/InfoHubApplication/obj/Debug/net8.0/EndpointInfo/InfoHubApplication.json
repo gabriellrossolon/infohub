@@ -14,17 +14,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Company"
+                "$ref": "#/components/schemas/CompanyViewModel"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/Company"
+                "$ref": "#/components/schemas/CompanyViewModel"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/Company"
+                "$ref": "#/components/schemas/CompanyViewModel"
               }
             }
           }
@@ -55,17 +55,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Enterprise"
+                "$ref": "#/components/schemas/EnterpriseViewModel"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/Enterprise"
+                "$ref": "#/components/schemas/EnterpriseViewModel"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/Enterprise"
+                "$ref": "#/components/schemas/EnterpriseViewModel"
               }
             }
           }
@@ -96,17 +96,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Group"
+                "$ref": "#/components/schemas/GroupViewModel"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/Group"
+                "$ref": "#/components/schemas/GroupViewModel"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/Group"
+                "$ref": "#/components/schemas/GroupViewModel"
               }
             }
           }
@@ -137,17 +137,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Message"
+                "$ref": "#/components/schemas/MessageViewModel"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/Message"
+                "$ref": "#/components/schemas/MessageViewModel"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/Message"
+                "$ref": "#/components/schemas/MessageViewModel"
               }
             }
           }
@@ -176,19 +176,52 @@
         ],
         "requestBody": {
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/UserViewModel"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UserViewModel"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/UserViewModel"
+                "required": [
+                  "CompanyId",
+                  "Email",
+                  "Name",
+                  "Password",
+                  "Role"
+                ],
+                "type": "object",
+                "properties": {
+                  "Name": {
+                    "type": "string"
+                  },
+                  "Email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "Password": {
+                    "type": "string"
+                  },
+                  "Role": {
+                    "type": "string"
+                  },
+                  "CompanyId": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                }
+              },
+              "encoding": {
+                "Name": {
+                  "style": "form"
+                },
+                "Email": {
+                  "style": "form"
+                },
+                "Password": {
+                  "style": "form"
+                },
+                "Role": {
+                  "style": "form"
+                },
+                "CompanyId": {
+                  "style": "form"
+                }
               }
             }
           }
@@ -244,36 +277,29 @@
   },
   "components": {
     "schemas": {
-      "Company": {
+      "CompanyViewModel": {
+        "required": [
+          "name"
+        ],
         "type": "object",
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32",
-            "readOnly": true
-          },
           "name": {
-            "type": "string",
-            "nullable": true
+            "minLength": 1,
+            "type": "string"
           }
         },
         "additionalProperties": false
       },
-      "Enterprise": {
+      "EnterpriseViewModel": {
+        "required": [
+          "companyId",
+          "name"
+        ],
         "type": "object",
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32",
-            "readOnly": true
-          },
           "name": {
-            "type": "string",
-            "nullable": true
-          },
-          "creationDate": {
-            "type": "string",
-            "format": "date-time"
+            "minLength": 1,
+            "type": "string"
           },
           "companyId": {
             "type": "integer",
@@ -282,25 +308,20 @@
         },
         "additionalProperties": false
       },
-      "Group": {
+      "GroupViewModel": {
+        "required": [
+          "enterpriseId",
+          "name"
+        ],
         "type": "object",
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32",
-            "readOnly": true
-          },
           "name": {
-            "type": "string",
-            "nullable": true
+            "minLength": 1,
+            "type": "string"
           },
           "enterpriseId": {
             "type": "integer",
             "format": "int32"
-          },
-          "creationDate": {
-            "type": "string",
-            "format": "date-time"
           }
         },
         "additionalProperties": false
@@ -324,14 +345,15 @@
         },
         "additionalProperties": false
       },
-      "Message": {
+      "MessageViewModel": {
+        "required": [
+          "groupId",
+          "messageCategory",
+          "messageContent",
+          "userId"
+        ],
         "type": "object",
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32",
-            "readOnly": true
-          },
           "groupId": {
             "type": "integer",
             "format": "int32"
@@ -341,48 +363,12 @@
             "format": "int32"
           },
           "messageCategory": {
-            "type": "string",
-            "nullable": true
+            "minLength": 1,
+            "type": "string"
           },
           "messageContent": {
-            "type": "string",
-            "nullable": true
-          },
-          "sendTime": {
-            "type": "string",
-            "format": "date-time"
-          }
-        },
-        "additionalProperties": false
-      },
-      "UserViewModel": {
-        "required": [
-          "email",
-          "name",
-          "password"
-        ],
-        "type": "object",
-        "properties": {
-          "name": {
             "minLength": 1,
             "type": "string"
-          },
-          "email": {
-            "minLength": 1,
-            "type": "string",
-            "format": "email"
-          },
-          "password": {
-            "minLength": 1,
-            "type": "string"
-          },
-          "role": {
-            "type": "string",
-            "nullable": true
-          },
-          "companyId": {
-            "type": "integer",
-            "format": "int32"
           }
         },
         "additionalProperties": false
