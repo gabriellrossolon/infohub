@@ -87,6 +87,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
+
 app.UseAuthorization();
 
 app.UseCors("AllowLocalhost5173"); // Adiciona o CORS

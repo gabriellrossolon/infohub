@@ -1,7 +1,9 @@
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Dashboard from "./components/Dashboard";
+import Dashboard from "./pages/Dashboard";
+
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   return (
@@ -16,7 +18,9 @@ function App() {
             <Route path="/" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route element={<PrivateRoute />}>
+              <Route path="/dashboard" element={<Dashboard />} />
+            </Route>
           </Routes>
         </BrowserRouter>
       </div>

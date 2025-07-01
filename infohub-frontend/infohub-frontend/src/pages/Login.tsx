@@ -35,6 +35,7 @@ const Login: React.FC<LoginProps> = ({}) => {
         alert(data.message || "Erro no Login");
         return;
       }
+      localStorage.setItem("token", data.token);
 
       console.log("Login efetuado com sucesso!", data);
        navigate("/dashboard");

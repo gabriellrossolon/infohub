@@ -1,6 +1,8 @@
 ﻿using InfoHubApplication.Models;
+using InfoHubApplication.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace InfoHubApplication.Controllers
 {
@@ -49,7 +51,7 @@ namespace InfoHubApplication.Controllers
             var users = _userRepository.Get();
             return Ok(users);
         }
-        [Authorize]
+
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginViewModel loginData)
         {
@@ -69,12 +71,19 @@ namespace InfoHubApplication.Controllers
                 return Unauthorized(new { message = "Usuário ou senha incorretos." });
             }
 
+            var token = TokenService.GenerateToken(user);
+
             return Ok(new
             {
-                id = user.Id,
-                name = user.Name,
-                email = user.Email,
-                role = user.Role
+                token = token,  // token é string aqui
+                user = new
+                {
+                    id = user.Id,
+                    name = user.Name,
+                    email = user.Email,
+                    role = user.Role,
+                    companyId = user.CompanyId
+                }
             });
         }
         private bool VerifyPassword(string plainPassword, string hashedPassword)

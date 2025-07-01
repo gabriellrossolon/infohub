@@ -8,27 +8,25 @@ namespace InfoHubApplication.Services
 {
     public class TokenService
     {
-        public static object GenerateToken(User user)
+        public static string GenerateToken(User user)
         {
             var key = Encoding.ASCII.GetBytes(Key.Secret);
             var tokenConfig = new SecurityTokenDescriptor
             {
-                Subject = new System.Security.Claims.ClaimsIdentity(new Claim[]
+                Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim ("userId", user.Id.ToString())
+            new Claim("userId", user.Id.ToString()),
+            new Claim(ClaimTypes.Role, user.Role) // se quiser incluir o role
                 }),
                 Expires = DateTime.UtcNow.AddHours(3),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                SigningCredentials = new SigningCredentials(
+                    new SymmetricSecurityKey(key),
+                    SecurityAlgorithms.HmacSha256Signature)
             };
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var token = tokenHandler.CreateToken(tokenConfig);
-            var tokenString = tokenHandler.WriteToken(token);
-
-            return new
-            {
-                token = tokenString,
-            };
+            return tokenHandler.WriteToken(token); // << Agora retorna só a string
         }
     }
 }
