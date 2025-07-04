@@ -7,6 +7,6 @@ namespace InfoHubApplication.ViewModel
         [Required]
         public string Name { get; set; }
         [Required]
-        public int EnterpriseId { get; set; }
+        public int CompanyId { get; set; }
     }
 }

@@ -55,7 +55,6 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IRepository<Message>, MessageRepository>();
 builder.Services.AddTransient<IRepository<Group>, GroupRepository>();
-builder.Services.AddTransient<IRepository<Enterprise>, EnterpriseRepository>();
 builder.Services.AddTransient<IRepository<Company>, CompanyRepository>();
 
 var key = Encoding.ASCII.GetBytes(InfoHubApplication.Key.Secret);

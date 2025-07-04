@@ -46,59 +46,6 @@
         }
       }
     },
-    "/api/v1/enterprise": {
-      "post": {
-        "tags": [
-          "Enterprise"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/EnterpriseViewModel"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/EnterpriseViewModel"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/EnterpriseViewModel"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      },
-      "get": {
-        "tags": [
-          "Enterprise"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/v1/enterprise/my-enterprises": {
-      "get": {
-        "tags": [
-          "Enterprise"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/api/v1/group": {
       "post": {
         "tags": [
@@ -129,6 +76,18 @@
           }
         }
       },
+      "get": {
+        "tags": [
+          "Group"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/group/my-groups": {
       "get": {
         "tags": [
           "Group"
@@ -269,7 +228,7 @@
         },
         "additionalProperties": false
       },
-      "EnterpriseViewModel": {
+      "GroupViewModel": {
         "required": [
           "companyId",
           "name"
@@ -281,24 +240,6 @@
             "type": "string"
           },
           "companyId": {
-            "type": "integer",
-            "format": "int32"
-          }
-        },
-        "additionalProperties": false
-      },
-      "GroupViewModel": {
-        "required": [
-          "enterpriseId",
-          "name"
-        ],
-        "type": "object",
-        "properties": {
-          "name": {
-            "minLength": 1,
-            "type": "string"
-          },
-          "enterpriseId": {
             "type": "integer",
             "format": "int32"
           }

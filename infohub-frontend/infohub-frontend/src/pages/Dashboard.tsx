@@ -1,46 +1,42 @@
 import ToRegisterButton from "../fixed-components/ToRegisterButton";
 import LogoutButton from "../fixed-components/LogoutButton";
 import { useEffect, useState } from "react";
-import { getMyEnterprises } from "../services/getMyEnterprises";
-
+import { getMyGroups } from "../services/getMyGroups";
 const Dashboard = () => {
-  const [enterprises, setEnterprises] = useState([]);
+  const [groups, setGroups] = useState<any[]>([]);
 
   useEffect(() => {
-    const fetchEnterprises = async () => {
+    const fetchGroups = async () => {
       const token = localStorage.getItem("token");
       if (!token) return;
 
       try {
-        const data = await getMyEnterprises(token);
-        setEnterprises(data);
+        const data = await getMyGroups(token);
+        setGroups(data);
       } catch (error) {
-        console.error("Erro ao buscar enterprises:", error);
+        console.error("Erro ao buscar grupos:", error);
       }
     };
 
-    fetchEnterprises();
+    fetchGroups();
   }, []);
 
   return (
     <div className="flex flex-col items-center justify-center gap-1">
-      <LogoutButton></LogoutButton>
-      <ToRegisterButton></ToRegisterButton>
+      <LogoutButton />
+      <ToRegisterButton />
       <div className="flex flex-col items-center justify-center gap-2">
-        <h1 className="text-xl font-bold text-white">Minhas Enterprises</h1>
-        {enterprises.length === 0 ? (
-          <p className="text-gray-300">Nenhuma enterprise encontrada.</p>
+        <h1 className="text-xl font-bold text-white">Meus Grupos</h1>
+        {groups.length === 0 ? (
+          <p className="text-gray-300">Nenhum grupo encontrado.</p>
         ) : (
-          enterprises.map((enterprise: any) => (
+          groups.map((group) => (
             <div
-              key={enterprise.id}
+              key={group.id}
               className="bg-gray-100 rounded p-2 w-full max-w-md shadow"
             >
-              <p className="font-semibold">{enterprise.name}</p>
-              <p className="text-sm text-white">
-                Criada em:{" "}
-                {new Date(enterprise.creationDate).toLocaleDateString()}
-              </p>
+              <p className="font-semibold">{group.name}</p>
+              {/* Se quiser mostrar mais info do group, coloque aqui */}
             </div>
           ))
         )}

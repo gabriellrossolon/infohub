@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("InfoHubApplication")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b640988283d2bbe0f2c8665b6004fcc9555d934a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1cd60c6b5343e0b27c3ac66598b16f5e5c63ab7c")]
 [assembly: System.Reflection.AssemblyProductAttribute("InfoHubApplication")]
 [assembly: System.Reflection.AssemblyTitleAttribute("InfoHubApplication")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

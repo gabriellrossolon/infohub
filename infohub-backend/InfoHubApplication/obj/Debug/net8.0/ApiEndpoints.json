@@ -26,42 +26,6 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "InfoHubApplication.Controllers.EnterpriseController",
-    "Method": "Add",
-    "RelativePath": "api/v1/enterprise",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "enterpriseViewModel",
-        "Type": "EnterpriseViewModel",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "InfoHubApplication.Controllers.EnterpriseController",
-    "Method": "Get",
-    "RelativePath": "api/v1/enterprise",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "InfoHubApplication.Controllers.EnterpriseController",
-    "Method": "GetMyEnterprises",
-    "RelativePath": "api/v1/enterprise/my-enterprises",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
     "ContainingType": "InfoHubApplication.Controllers.GroupController",
     "Method": "Add",
     "RelativePath": "api/v1/group",
@@ -81,6 +45,16 @@
     "ContainingType": "InfoHubApplication.Controllers.GroupController",
     "Method": "Get",
     "RelativePath": "api/v1/group",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "InfoHubApplication.Controllers.GroupController",
+    "Method": "GetMyGroups",
+    "RelativePath": "api/v1/group/my-groups",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,

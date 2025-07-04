@@ -9,13 +9,13 @@ namespace InfoHubApplication.Models
         [Key]
         public int Id { get; private set; }
         public string Name { get; private set; }
-        public int EnterpriseId {  get; private set; }
+        public int CompanyId {  get; private set; }
         public DateTime CreationDate { get; private set; }
 
-        public Group(string name, int enterpriseId)
+        public Group(string name, int companyId)
         {
             this.Name = name ?? throw new ArgumentNullException(nameof(name));
-            this.EnterpriseId = enterpriseId;
+            this.CompanyId = companyId;
             this.CreationDate = DateTime.UtcNow;
         }
     }
