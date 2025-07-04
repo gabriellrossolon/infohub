@@ -52,6 +52,16 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "InfoHubApplication.Controllers.EnterpriseController",
+    "Method": "GetMyEnterprises",
+    "RelativePath": "api/v1/enterprise/my-enterprises",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "InfoHubApplication.Controllers.GroupController",
     "Method": "Add",
     "RelativePath": "api/v1/group",
@@ -75,6 +85,22 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "InfoHubApplication.Controllers.LoginController",
+    "Method": "Login",
+    "RelativePath": "api/v1/login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "loginData",
+        "Type": "LoginViewModel",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {
@@ -112,29 +138,9 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "Name",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "Email",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "Password",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "Role",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "CompanyId",
-        "Type": "System.Int32",
-        "IsRequired": false
+        "Name": "userViewModel",
+        "Type": "UserViewModel",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
@@ -147,22 +153,6 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "InfoHubApplication.Controllers.UserController",
-    "Method": "Login",
-    "RelativePath": "api/v1/user/login",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "loginData",
-        "Type": "LoginViewModel",
-        "IsRequired": true
-      }
-    ],
     "ReturnTypes": []
   }
 ]

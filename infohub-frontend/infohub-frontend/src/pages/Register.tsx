@@ -5,6 +5,8 @@ import { USER_ROLES } from "../types/roles";
 import { USER_COMPANIES } from "../types/companies";
 
 import { useState } from "react";
+import LogoutButton from "../fixed-components/LogoutButton";
+import ToDashboardButton from "../fixed-components/ToDashboardButton";
 
 interface RegisterProps {}
 
@@ -37,25 +39,41 @@ const Register: React.FC<RegisterProps> = ({}) => {
       role: userRole,
     };
 
-    console.log(userData)
+    const token = localStorage.getItem("token");
+
+    console.log(userData);
 
     try {
       const response = await fetch("https://localhost:7103/api/v1/user", {
         method: "POST",
-        headers: { "Content-type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify(userData),
       });
 
-      const data = await response.json();
+      let data = null;
+      let errorMessage = "Erro no registro";
+
+      try {
+        data = await response.json();
+        errorMessage = data?.message || errorMessage;
+      } catch {
+        // Caso não seja JSON (ex: texto simples)
+        const text = await response.text();
+        if (text) errorMessage = text;
+      }
 
       if (!response.ok) {
-        alert(data.message || "Erro no registro");
+        alert(errorMessage);
         return;
       }
 
       console.log("Registrado com sucesso:", data);
     } catch (err) {
       console.log("Erro ao registrar:", err);
+      alert("Erro ao conectar com o servidor.");
     }
   };
 
@@ -119,6 +137,10 @@ const Register: React.FC<RegisterProps> = ({}) => {
             Registrar
           </button>
         </form>
+        <div className="flex items-center justify-between">
+          <LogoutButton></LogoutButton>
+          <ToDashboardButton></ToDashboardButton>
+        </div>
       </div>
     </div>
   );

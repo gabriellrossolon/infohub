@@ -36,5 +36,24 @@ namespace InfoHubApplication.Controllers
             var enterprises = _enterpriseRepository.Get();
             return Ok(enterprises);
         }
+
+        [Authorize]
+        [HttpGet("my-enterprises")]
+        public IActionResult GetMyEnterprises()
+        {
+            var companyIdClaim = User.Claims.FirstOrDefault(c => c.Type == "companyId")?.Value;
+
+            if (string.IsNullOrEmpty(companyIdClaim) || !int.TryParse(companyIdClaim, out int companyId))
+            {
+                return Unauthorized("Company ID inválido no token.");
+            }
+
+            var enterprises = _enterpriseRepository
+                .Get()
+                .Where(e => e.CompanyId == companyId)
+                .ToList();
+
+            return Ok(enterprises);
+        }
     }
 }

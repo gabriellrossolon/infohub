@@ -87,11 +87,11 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCors("AllowLocalhost5173"); // Adiciona o CORS
+
 app.UseAuthentication();
 
 app.UseAuthorization();
-
-app.UseCors("AllowLocalhost5173"); // Adiciona o CORS
 
 app.MapControllers();
 

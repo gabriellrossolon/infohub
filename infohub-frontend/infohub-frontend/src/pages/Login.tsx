@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import FormField from "../components/FormField";
+import { isTokenValid } from "../utils/auth";
 
 interface LoginProps {}
 
@@ -8,6 +9,13 @@ const Login: React.FC<LoginProps> = ({}) => {
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token && isTokenValid(token)) {
+      navigate("/dashboard");
+    }
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,7 +31,7 @@ const Login: React.FC<LoginProps> = ({}) => {
     };
 
     try {
-      const response = await fetch("https://localhost:7103/api/v1/user/login", {
+      const response = await fetch("https://localhost:7103/api/v1/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(userData),
@@ -38,7 +46,7 @@ const Login: React.FC<LoginProps> = ({}) => {
       localStorage.setItem("token", data.token);
 
       console.log("Login efetuado com sucesso!", data);
-       navigate("/dashboard");
+      navigate("/dashboard");
     } catch (err) {
       console.error("Erro ao fazer login:", err);
       alert("Erro ao fazer Login, tente novamente.");

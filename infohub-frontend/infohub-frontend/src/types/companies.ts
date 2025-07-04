@@ -4,6 +4,6 @@ export interface UserCompany {
 }
 
 export const USER_COMPANIES: UserCompany[] = [
-  { id: 1, label: "Asstramed" },
-  { id: 2, label: "Empresa Teste" },
+  { id: 1, label: "ADMIN" },
+  { id: 2, label: "Asstramed" },
 ];

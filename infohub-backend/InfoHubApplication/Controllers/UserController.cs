@@ -1,8 +1,11 @@
-﻿using InfoHubApplication.Models;
+﻿using InfoHubApplication.Constants;
+using InfoHubApplication.Models;
 using InfoHubApplication.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Linq;
+using System.Security.Claims;
 
 namespace InfoHubApplication.Controllers
 {
@@ -16,11 +19,12 @@ namespace InfoHubApplication.Controllers
         {
             _userRepository = userRepository;
         }
-        [Authorize]
+
+        [Authorize(Roles = "admin,manager")]
         [HttpPost]
-        public IActionResult Add([FromForm] UserViewModel userViewModel)
+        public IActionResult Add([FromBody] UserViewModel userViewModel)
         {
-            if(userViewModel == null)
+            if (userViewModel == null)
             {
                 return BadRequest("User data is null");
             }
@@ -30,6 +34,44 @@ namespace InfoHubApplication.Controllers
             {
                 return Conflict(new { message = "Já existe um usuário com esse Email!" });
             }
+
+
+
+            // Regras de validação de Role e Company ->
+            var validRoles = new[] { Roles.User, Roles.Manager, Roles.Admin };
+            if (!validRoles.Contains(userViewModel.Role))
+            {
+                return BadRequest("Role inválida.");
+            }
+            var currentUserRole = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+            var currentUserCompanyId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == "companyId")?.Value ?? "0");
+
+            if (string.IsNullOrEmpty(currentUserRole))
+            {
+                return Unauthorized("Usuário não autenticado corretamente.");
+            }
+            // Regras de permissão específicas:
+            if (currentUserRole == Roles.Admin)
+            {
+
+            }
+            else if (currentUserRole == Roles.Manager)
+            {
+                if (userViewModel.CompanyId != currentUserCompanyId)
+                {
+                    return StatusCode(403, new { message = "Managers só podem criar Usuários dentro da própria empresa." });
+                }
+
+                if (userViewModel.Role == Roles.Admin)
+                {
+                    return StatusCode(403, new { message = "Managers não podem criar usuários com role admin." });
+                }
+            }
+            else
+            {
+                return StatusCode(403, new { message = "Usuários não possuem permissão para criar outros usuários." });
+            }
+
 
             var user = new User(userViewModel.Name, userViewModel.Email, userViewModel.Password, userViewModel.Role, userViewModel.CompanyId);
 
@@ -44,52 +86,14 @@ namespace InfoHubApplication.Controllers
                 companyId = user.CompanyId,
             });
         }
-        [Authorize]
+
+
+        [Authorize(Roles = "admin")]
         [HttpGet]
         public IActionResult Get()
         {
             var users = _userRepository.Get();
             return Ok(users);
         }
-
-        [HttpPost("login")]
-        public IActionResult Login([FromBody] LoginViewModel loginData)
-        {
-            if(loginData == null || string.IsNullOrEmpty(loginData.Email) || string.IsNullOrEmpty(loginData.Password))
-            {
-                return BadRequest("Dados de login inválidos");
-            }
-
-            var user = _userRepository.FindByEmail(loginData.Email);
-            if (user == null)
-            {
-                return Unauthorized(new { message = "Usuário ou senha incorretos." });
-            }
-
-            if (!VerifyPassword(loginData.Password, user.PasswordHash))
-            {
-                return Unauthorized(new { message = "Usuário ou senha incorretos." });
-            }
-
-            var token = TokenService.GenerateToken(user);
-
-            return Ok(new
-            {
-                token = token,  // token é string aqui
-                user = new
-                {
-                    id = user.Id,
-                    name = user.Name,
-                    email = user.Email,
-                    role = user.Role,
-                    companyId = user.CompanyId
-                }
-            });
-        }
-        private bool VerifyPassword(string plainPassword, string hashedPassword)
-        {
-            return BCrypt.Net.BCrypt.Verify(plainPassword, hashedPassword);
-        }
-
     }
 }

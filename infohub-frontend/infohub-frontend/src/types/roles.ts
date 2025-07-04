@@ -1,3 +1,3 @@
-export type UserRole = "user" | "editor" | "admin";
+export type UserRole = "user" | "manager" | "admin";
 
-export const USER_ROLES: UserRole[] = ["user", "editor", "admin"];
+export const USER_ROLES: UserRole[] = ["user", "manager", "admin"];

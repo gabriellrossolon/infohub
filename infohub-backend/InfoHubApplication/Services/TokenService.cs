@@ -16,7 +16,8 @@ namespace InfoHubApplication.Services
                 Subject = new ClaimsIdentity(new Claim[]
                 {
             new Claim("userId", user.Id.ToString()),
-            new Claim(ClaimTypes.Role, user.Role) // se quiser incluir o role
+            new Claim(ClaimTypes.Role, user.Role), // se quiser incluir o role
+            new Claim("companyId", user.CompanyId.ToString())
                 }),
                 Expires = DateTime.UtcNow.AddHours(3),
                 SigningCredentials = new SigningCredentials(
