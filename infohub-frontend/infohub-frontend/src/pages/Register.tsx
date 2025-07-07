@@ -131,7 +131,7 @@ const Register: React.FC<RegisterProps> = ({}) => {
           <button
             type="submit"
             className="cursor-pointer bg-gray-200 rounded-md py-1 px-4 text-xl font-semibold text-gray-900 w-full
-            transition-colors duration-500 hover:bg-gray-300
+            transition-colors duration-500 hover:bg-gray-300 mb-2
             "
           >
             Registrar

@@ -16,5 +16,10 @@ namespace InfoHubApplication.Infrastructure
         {
             return _context.Messages.ToList();
         }
+
+        public Message FindById(int id)
+        {
+            return _context.Set<Message>().Find(id);
+        }
     }
 }

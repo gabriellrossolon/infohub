@@ -1,4 +1,5 @@
 ﻿using InfoHubApplication.Constants;
+using InfoHubApplication.Infrastructure;
 using InfoHubApplication.Models;
 using InfoHubApplication.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -94,6 +95,18 @@ namespace InfoHubApplication.Controllers
         {
             var users = _userRepository.Get();
             return Ok(users);
+        }
+
+        [Authorize]
+        [HttpGet("{id:int}")]
+        public IActionResult GetById(int id)
+        {
+            var user = _userRepository.FindById(id);
+            if (user == null)
+            {
+                return NotFound(new { message = "User não encontrado." });
+            }
+            return Ok(user);
         }
     }
 }

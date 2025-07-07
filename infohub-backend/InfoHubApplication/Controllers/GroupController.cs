@@ -1,4 +1,5 @@
-﻿using InfoHubApplication.Models;
+﻿using InfoHubApplication.Infrastructure;
+using InfoHubApplication.Models;
 using InfoHubApplication.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -58,6 +59,18 @@ namespace InfoHubApplication.Controllers
                 .ToList();
 
             return Ok(groups);
+        }
+
+        [Authorize]
+        [HttpGet("{id:int}")]
+        public IActionResult GetById(int id)
+        {
+            var group = _groupRepository.FindById(id);
+            if (group == null)
+            {
+                return NotFound(new { message = "Grupo não encontrada." });
+            }
+            return Ok(group);
         }
     }
 

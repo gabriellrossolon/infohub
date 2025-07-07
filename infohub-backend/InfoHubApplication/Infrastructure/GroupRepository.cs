@@ -16,5 +16,10 @@ namespace InfoHubApplication.Infrastructure
         {
             return _context.Groups.ToList();
         }
+
+        public Group FindById(int id)
+        {
+            return _context.Set<Group>().Find(id);
+        }
     }
 }

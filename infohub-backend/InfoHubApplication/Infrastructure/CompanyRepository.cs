@@ -16,5 +16,10 @@ namespace InfoHubApplication.Infrastructure
         {
             return _context.Companies.ToList();
         }
+
+        public Company FindById(int id)
+        {
+            return _context.Set<Company>().Find(id);
+        }
     }
 }

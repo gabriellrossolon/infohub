@@ -4,5 +4,6 @@
     {
         void Add(T entity);
         List<T> Get();
+        T FindById(int id);
     }
 }

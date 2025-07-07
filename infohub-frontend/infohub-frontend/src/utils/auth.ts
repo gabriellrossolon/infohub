@@ -1,7 +1,11 @@
-import {jwtDecode} from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 
 interface JwtPayload {
   exp: number;
+  userId?: string;
+  companyId?: string;
+  role?: string;
+  [key: string]: any;
 }
 
 export const isTokenValid = (token: string): boolean => {
@@ -11,5 +15,13 @@ export const isTokenValid = (token: string): boolean => {
     return decoded.exp > now;
   } catch {
     return false;
+  }
+};
+
+export const getTokenData = (token: string): JwtPayload | null => {
+  try {
+    return jwtDecode<JwtPayload>(token);
+  } catch {
+    return null;
   }
 };

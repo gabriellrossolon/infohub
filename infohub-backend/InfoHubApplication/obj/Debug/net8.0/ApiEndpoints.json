@@ -26,6 +26,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "InfoHubApplication.Controllers.CompanyController",
+    "Method": "GetById",
+    "RelativePath": "api/v1/company/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "InfoHubApplication.Controllers.GroupController",
     "Method": "Add",
     "RelativePath": "api/v1/group",
@@ -49,6 +65,22 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "InfoHubApplication.Controllers.GroupController",
+    "Method": "GetById",
+    "RelativePath": "api/v1/group/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {
@@ -104,6 +136,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "InfoHubApplication.Controllers.MessageController",
+    "Method": "GetById",
+    "RelativePath": "api/v1/message/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "InfoHubApplication.Controllers.UserController",
     "Method": "Add",
     "RelativePath": "api/v1/user",
@@ -127,6 +175,22 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "InfoHubApplication.Controllers.UserController",
+    "Method": "GetById",
+    "RelativePath": "api/v1/user/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   }
 ]

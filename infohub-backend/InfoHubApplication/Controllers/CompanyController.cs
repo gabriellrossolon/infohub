@@ -38,5 +38,17 @@ namespace InfoHubApplication.Controllers
             var companies = _companyRepository.Get();
             return Ok(companies);
         }
+
+        [Authorize]
+        [HttpGet("{id:int}")]
+        public IActionResult GetById(int id)
+        {
+            var company = _companyRepository.FindById(id);
+            if (company == null)
+            {
+                return NotFound(new { message = "Empresa não encontrada." });
+            }
+            return Ok(company);
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using InfoHubApplication.Models;
+﻿using InfoHubApplication.Infrastructure;
+using InfoHubApplication.Models;
 using InfoHubApplication.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -38,5 +39,16 @@ namespace InfoHubApplication.Controllers
             return Ok(messages);
         }
 
+        [Authorize]
+        [HttpGet("{id:int}")]
+        public IActionResult GetById(int id)
+        {
+            var message = _messageRepository.FindById(id);
+            if (message == null)
+            {
+                return NotFound(new { message = "Mensagem não encontrada." });
+            }
+            return Ok(message);
+        }
     }
 }
