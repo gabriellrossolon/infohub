@@ -5,6 +5,7 @@ import { getUserData } from "../services/getUserData";
 import LogoutButton from "../fixed-components/LogoutButton";
 
 import { FiSettings, FiLogOut, FiMessageSquare } from "react-icons/fi"; // Feather Icons
+import ToRegisterButton from "../fixed-components/ToRegisterButton";
 
 const Dashboard = () => {
   const [groups, setGroups] = useState<any[]>([]);
@@ -81,6 +82,7 @@ const Dashboard = () => {
       {/* Seção de mensagens */}
       <div className="col-span-2">
         <LogoutButton></LogoutButton>
+        <ToRegisterButton></ToRegisterButton>
       </div>
     </div>
   );

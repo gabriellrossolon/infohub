@@ -1,22 +1,102 @@
+import { useEffect, useState } from "react";
 import FormField from "../components/FormField";
 import SelectFormField from "../components/SelectFormField";
 import type { UserRole } from "../types/roles";
-import { USER_ROLES } from "../types/roles";
-import { USER_COMPANIES } from "../types/companies";
-
-import { useState } from "react";
 import LogoutButton from "../fixed-components/LogoutButton";
 import ToDashboardButton from "../fixed-components/ToDashboardButton";
+import { isTokenValid, getTokenData } from "../utils/auth";
+import { useNavigate } from "react-router-dom";
 
-interface RegisterProps {}
+interface UserCompany {
+  id: number;
+  label: string;
+}
 
-const Register: React.FC<RegisterProps> = ({}) => {
+const Register: React.FC = () => {
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [userRepeatedPassword, setUserRepeatedPassword] = useState("");
   const [userCompany, setUserCompany] = useState<number | "">("");
   const [userRole, setUserRole] = useState<UserRole | "">("");
+
+  const [availableCompanies, setAvailableCompanies] = useState<UserCompany[]>([]);
+  const [availableRoles, setAvailableRoles] = useState<UserRole[]>([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token || !isTokenValid(token)) return;
+
+    const data = getTokenData(token);
+    const role = data?.role;
+    const companyId = Number(data?.companyId);
+
+    if (!role) return;
+
+    if (role === "admin") {
+      setAvailableRoles(["user", "manager", "admin"]);
+
+      const fetchAllCompanies = async () => {
+        try {
+          const response = await fetch(
+            "https://localhost:7103/api/v1/company",
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+
+          if (!response.ok) throw new Error("Erro ao buscar empresas");
+
+          const companies = await response.json();
+
+          const formattedCompanies = companies.map((company: any) => ({
+            id: company.id,
+            label: company.name,
+          }));
+
+          setAvailableCompanies(formattedCompanies);
+        } catch (err) {
+          console.error("Erro ao buscar empresas:", err);
+          alert("Erro ao carregar empresas.");
+        }
+      };
+
+      fetchAllCompanies();
+    }
+    else if (role === "manager") {
+      setAvailableRoles(["user", "manager"]);
+      setUserCompany(companyId);
+
+      const fetchCompanyName = async () => {
+        try {
+          const response = await fetch(
+            `https://localhost:7103/api/v1/company/${companyId}`,
+            {
+              headers: { Authorization: `Bearer ${token}` },
+            }
+          );
+
+          if (!response.ok) throw new Error("Erro ao buscar empresa");
+
+          const companyData = await response.json();
+          setAvailableCompanies([{ id: companyId, label: companyData.name }]);
+        } catch (err) {
+          console.error("Erro ao buscar empresa:", err);
+          setAvailableCompanies([
+            { id: companyId, label: "Empresa Desconhecida" },
+          ]);
+        }
+      };
+
+      fetchCompanyName();
+    }
+    else {
+      navigate("/dashboard");
+    }
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,8 +106,8 @@ const Register: React.FC<RegisterProps> = ({}) => {
       return;
     }
 
-    if (userPassword != userRepeatedPassword) {
-      alert("As senhas não coincidem, digite novamente.");
+    if (userPassword !== userRepeatedPassword) {
+      alert("As senhas não coincidem.");
       return;
     }
 
@@ -40,8 +120,6 @@ const Register: React.FC<RegisterProps> = ({}) => {
     };
 
     const token = localStorage.getItem("token");
-
-    console.log(userData);
 
     try {
       const response = await fetch("https://localhost:7103/api/v1/user", {
@@ -60,7 +138,6 @@ const Register: React.FC<RegisterProps> = ({}) => {
         data = await response.json();
         errorMessage = data?.message || errorMessage;
       } catch {
-        // Caso não seja JSON (ex: texto simples)
         const text = await response.text();
         if (text) errorMessage = text;
       }
@@ -70,7 +147,8 @@ const Register: React.FC<RegisterProps> = ({}) => {
         return;
       }
 
-      console.log("Registrado com sucesso:", data);
+      alert("Usuário registrado com sucesso!");
+      console.log("Registrado:", data);
     } catch (err) {
       console.log("Erro ao registrar:", err);
       alert("Erro ao conectar com o servidor.");
@@ -88,58 +166,59 @@ const Register: React.FC<RegisterProps> = ({}) => {
           <div className="flex flex-col gap-2">
             <FormField
               name="Nome e Sobrenome"
-              type={"text"}
+              type="text"
               placeholder="ex: João Silva"
               value={userName}
               onChangeFunc={(e) => setUserName(e.target.value)}
             />
             <FormField
               name="Email"
-              type={"email"}
+              type="email"
               placeholder="ex: usuario@email.com.br"
               value={userEmail}
               onChangeFunc={(e) => setUserEmail(e.target.value)}
             />
             <FormField
               name="Senha"
-              type={"password"}
+              type="password"
               placeholder="ex: senha123"
               value={userPassword}
               onChangeFunc={(e) => setUserPassword(e.target.value)}
             />
             <FormField
               name="Confirme a senha"
-              type={"password"}
+              type="password"
               placeholder="ex: senha123"
               value={userRepeatedPassword}
               onChangeFunc={(e) => setUserRepeatedPassword(e.target.value)}
             />
+
             <SelectFormField
               name="Empresa Principal"
               value={userCompany}
               onChange={(e) => setUserCompany(Number(e.target.value))}
-              options={USER_COMPANIES}
+              options={availableCompanies}
             />
+
             <SelectFormField
               name="Permissão"
               value={userRole}
               onChange={(e) => setUserRole(e.target.value as UserRole)}
-              options={USER_ROLES}
+              options={availableRoles}
             />
           </div>
 
           <button
             type="submit"
             className="cursor-pointer bg-gray-200 rounded-md py-1 px-4 text-xl font-semibold text-gray-900 w-full
-            transition-colors duration-500 hover:bg-gray-300 mb-2
-            "
+              transition-colors duration-500 hover:bg-gray-300 mb-2"
           >
             Registrar
           </button>
         </form>
         <div className="flex items-center justify-between">
-          <LogoutButton></LogoutButton>
-          <ToDashboardButton></ToDashboardButton>
+          <LogoutButton />
+          <ToDashboardButton />
         </div>
       </div>
     </div>
