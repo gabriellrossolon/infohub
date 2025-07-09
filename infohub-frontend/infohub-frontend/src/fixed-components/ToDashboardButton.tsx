@@ -1,5 +1,6 @@
 import Button from "../components/Button"
 import { useNavigate } from "react-router-dom";
+import { FiMessageSquare } from "react-icons/fi";
 
 const ToDashboardButton: React.FC = ( { } ) => {
   const navigate = useNavigate();
@@ -10,7 +11,9 @@ const ToDashboardButton: React.FC = ( { } ) => {
 
   return (
     <div>
-      <Button text="Dashboard" onClick={handleDashboard}></Button>
+      <Button onClick={handleDashboard}>
+        <FiMessageSquare className="text-3xl text-gray-200 cursor-pointer"></FiMessageSquare>
+      </Button>
     </div>
   )
 }

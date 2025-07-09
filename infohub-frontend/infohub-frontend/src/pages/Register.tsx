@@ -20,8 +20,11 @@ const Register: React.FC = () => {
   const [userCompany, setUserCompany] = useState<number | "">("");
   const [userRole, setUserRole] = useState<UserRole | "">("");
 
-  const [availableCompanies, setAvailableCompanies] = useState<UserCompany[]>([]);
+  const [availableCompanies, setAvailableCompanies] = useState<UserCompany[]>(
+    []
+  );
   const [availableRoles, setAvailableRoles] = useState<UserRole[]>([]);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -34,72 +37,64 @@ const Register: React.FC = () => {
 
     if (!role) return;
 
+    const fetchAllCompanies = async () => {
+      try {
+        const response = await fetch("https://localhost:7103/api/v1/company", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        if (!response.ok) throw new Error("Erro ao buscar empresas");
+
+        const companies = await response.json();
+
+        const formattedCompanies = companies.map((company: any) => ({
+          id: company.id,
+          label: company.name,
+        }));
+
+        setAvailableCompanies(formattedCompanies);
+      } catch (err) {
+        console.error("Erro ao buscar empresas:", err);
+        alert("Erro ao carregar empresas.");
+      }
+    };
+
+    const fetchCompanyName = async () => {
+      try {
+        const response = await fetch(
+          `https://localhost:7103/api/v1/company/${companyId}`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+
+        if (!response.ok) throw new Error("Erro ao buscar empresa");
+
+        const companyData = await response.json();
+        setAvailableCompanies([{ id: companyId, label: companyData.name }]);
+      } catch (err) {
+        console.error("Erro ao buscar empresa:", err);
+        setAvailableCompanies([
+          { id: companyId, label: "Empresa Desconhecida" },
+        ]);
+      }
+    };
+
     if (role === "admin") {
       setAvailableRoles(["user", "manager", "admin"]);
-
-      const fetchAllCompanies = async () => {
-        try {
-          const response = await fetch(
-            "https://localhost:7103/api/v1/company",
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
-
-          if (!response.ok) throw new Error("Erro ao buscar empresas");
-
-          const companies = await response.json();
-
-          const formattedCompanies = companies.map((company: any) => ({
-            id: company.id,
-            label: company.name,
-          }));
-
-          setAvailableCompanies(formattedCompanies);
-        } catch (err) {
-          console.error("Erro ao buscar empresas:", err);
-          alert("Erro ao carregar empresas.");
-        }
-      };
-
       fetchAllCompanies();
-    }
-    else if (role === "manager") {
+    } else if (role === "manager") {
       setAvailableRoles(["user", "manager"]);
       setUserCompany(companyId);
-
-      const fetchCompanyName = async () => {
-        try {
-          const response = await fetch(
-            `https://localhost:7103/api/v1/company/${companyId}`,
-            {
-              headers: { Authorization: `Bearer ${token}` },
-            }
-          );
-
-          if (!response.ok) throw new Error("Erro ao buscar empresa");
-
-          const companyData = await response.json();
-          setAvailableCompanies([{ id: companyId, label: companyData.name }]);
-        } catch (err) {
-          console.error("Erro ao buscar empresa:", err);
-          setAvailableCompanies([
-            { id: companyId, label: "Empresa Desconhecida" },
-          ]);
-        }
-      };
-
       fetchCompanyName();
-    }
-    else {
+    } else {
       navigate("/dashboard");
     }
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const token = localStorage.getItem("token");
 
     if (!userName || !userEmail || !userPassword || !userCompany || !userRole) {
       alert("Preencha todos os campos!");
@@ -118,8 +113,6 @@ const Register: React.FC = () => {
       companyId: userCompany,
       role: userRole,
     };
-
-    const token = localStorage.getItem("token");
 
     try {
       const response = await fetch("https://localhost:7103/api/v1/user", {

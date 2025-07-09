@@ -1,15 +1,17 @@
 interface ButtonProps {
-text: string;
+text?: string;
+children?: React.ReactNode;
 onClick: () => void;
 }
 
-const Button: React.FC<ButtonProps> = ({text, onClick}) => {
+const Button: React.FC<ButtonProps> = ({text, onClick, children}) => {
   return (
     <button
       onClick={onClick}
-      className="px-4 py-2 bg-yellow-600 text-white rounded hover:bg-yellow-700 transition cursor-pointer"
+      className="hover:bg-white/20 rounded-full duration-300 p-2"
     >
       {text}
+      {children}
     </button>
   );
 };

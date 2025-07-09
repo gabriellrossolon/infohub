@@ -1,21 +1,22 @@
 import Button from "../components/Button"
 import { useNavigate } from "react-router-dom";
-import { FiUserPlus } from "react-icons/fi";
+import { FiSettings } from "react-icons/fi"; // Feather Icons
 
-const ToRegisterButton: React.FC = ( { } ) => {
+
+const ToSettingsButton: React.FC = ( { } ) => {
   const navigate = useNavigate();
 
   const handleRegister = () => {
-    navigate("/register");
+    navigate("/dashboard");
   }
 
   return (
     <div>
       <Button onClick={handleRegister}>
-        <FiUserPlus className="text-3xl text-gray-200 cursor-pointer" />
+        <FiSettings className="text-3xl text-gray-200 cursor-pointer" />
       </Button>
     </div>
   )
 }
 
-export default ToRegisterButton
+export default ToSettingsButton
