@@ -40,15 +40,16 @@ namespace InfoHubApplication.Controllers
         }
 
         [Authorize]
-        [HttpGet("{id:int}")]
-        public IActionResult GetById(int id)
+        [HttpGet("group/{groupId:int}")]
+        public IActionResult GetMessagesByGroupId(int groupId)
         {
-            var message = _messageRepository.FindById(id);
-            if (message == null)
-            {
-                return NotFound(new { message = "Mensagem não encontrada." });
-            }
-            return Ok(message);
+            var messages = _messageRepository
+                .Get()
+                .Where(m => m.GroupId == groupId)
+                .OrderByDescending(m => m.SendTime)
+                .ToList();
+
+            return Ok(messages);
         }
     }
 }

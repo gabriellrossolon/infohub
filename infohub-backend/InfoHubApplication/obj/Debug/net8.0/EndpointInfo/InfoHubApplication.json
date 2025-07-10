@@ -217,14 +217,14 @@
         }
       }
     },
-    "/api/v1/message/{id}": {
+    "/api/v1/message/group/{groupId}": {
       "get": {
         "tags": [
           "Message"
         ],
         "parameters": [
           {
-            "name": "id",
+            "name": "groupId",
             "in": "path",
             "required": true,
             "schema": {

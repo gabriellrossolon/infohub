@@ -19,6 +19,7 @@ export async function getUserData(token: string) {
   const company = await companyResponse.json();
 
   return {
+    userId: user.id,
     userName: user.name,
     companyName: company.name,
   };

@@ -6,6 +6,8 @@ import LogoutButton from "../fixed-components/LogoutButton";
 import ToDashboardButton from "../fixed-components/ToDashboardButton";
 import { isTokenValid, getTokenData } from "../utils/auth";
 import { useNavigate } from "react-router-dom";
+import { getMyCompanies } from "../services/getMyCompanies";
+import { getCompanies } from "../services/getCompanies";
 
 interface UserCompany {
   id: number;
@@ -39,15 +41,9 @@ const Register: React.FC = () => {
 
     const fetchAllCompanies = async () => {
       try {
-        const response = await fetch("https://localhost:7103/api/v1/company", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const companiesData = await getCompanies(token);
 
-        if (!response.ok) throw new Error("Erro ao buscar empresas");
-
-        const companies = await response.json();
-
-        const formattedCompanies = companies.map((company: any) => ({
+        const formattedCompanies = companiesData.map((company: any) => ({
           id: company.id,
           label: company.name,
         }));
@@ -59,18 +55,9 @@ const Register: React.FC = () => {
       }
     };
 
-    const fetchCompanyName = async () => {
+    const fetchMyCompany = async () => {
       try {
-        const response = await fetch(
-          `https://localhost:7103/api/v1/company/${companyId}`,
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
-
-        if (!response.ok) throw new Error("Erro ao buscar empresa");
-
-        const companyData = await response.json();
+        const companyData = await getMyCompanies(token, companyId);
         setAvailableCompanies([{ id: companyId, label: companyData.name }]);
       } catch (err) {
         console.error("Erro ao buscar empresa:", err);
@@ -86,7 +73,7 @@ const Register: React.FC = () => {
     } else if (role === "manager") {
       setAvailableRoles(["user", "manager"]);
       setUserCompany(companyId);
-      fetchCompanyName();
+      fetchMyCompany();
     } else {
       navigate("/dashboard");
     }
