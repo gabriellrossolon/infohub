@@ -9,7 +9,8 @@ import ToDashboardButton from "../fixed-components/ToDashboardButton";
 import ToSettingsButton from "../fixed-components/ToSettingsButton";
 import { getGroupMessages } from "../services/getGroupMessages";
 import SelectFormField from "../components/SelectFormField";
-import { FaRegSquarePlus } from "react-icons/fa6";
+import { BiMessageAdd } from "react-icons/bi";
+import CreateGroup from "./CreateGroup";
 
 const Dashboard = () => {
   //Exibições no lado esquerdo (grupos e opções)
@@ -29,14 +30,65 @@ const Dashboard = () => {
   const [inputMessage, setInputMessage] = useState<string>("");
 
   //Controles gerais
+  const [creatingNewGroup, setCreatingNewGroup] = useState<boolean>(false);
+  const [newGroupName, setNewGroupName] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
+
+  const handleSetCreatingGroup = () => {
+    setSelectedGroup("");
+    setCreatingNewGroup(!creatingNewGroup);
+  };
+
+  const handleCreateNewGroup = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const token = localStorage.getItem("token");
+    if (!token || !isTokenValid(token)) return;
+
+    if (!newGroupName) {
+      return;
+    }
+
+    const userData = await getUserData(token);
+
+    const groupData = {
+      name: newGroupName,
+      companyId: userData.companyId,
+    };
+
+    try {
+      const response = await fetch("https://localhost:7103/api/v1/group", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(groupData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Erro ao criar novo grupo.");
+      }
+
+      setNewGroupName("");
+      setCreatingNewGroup(false);
+
+      const data = await getMyGroups(token);
+      setGroups(data);
+      
+    } catch (err) {
+      console.log("Erro ao registrar:", err);
+      alert("Erro ao conectar com o servidor.");
+    }
+  };
 
   const handleSelectGroup = async (group: any) => {
     const token = localStorage.getItem("token");
     if (!token || !isTokenValid(token)) return;
 
     setSelectedGroup(group);
+    setCreatingNewGroup(false);
 
     try {
       // Busca mensagens do grupo selecionado
@@ -101,16 +153,16 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
+    setAvaibleMessageCategories([
+      "Feedback",
+      "Aviso",
+      "Reclamação",
+      "Solicitação",
+    ]);
+
     const fetchData = async () => {
       const token = localStorage.getItem("token");
       if (!token || !isTokenValid(token)) return;
-
-      setAvaibleMessageCategories([
-        "Feedback",
-        "Aviso",
-        "Reclamação",
-        "Solicitação",
-      ]);
 
       try {
         // Busca nomes do usuário e empresa
@@ -123,7 +175,7 @@ const Dashboard = () => {
         setGroups(data);
       } catch (err) {
         console.error("Erro ao carregar dados:", err);
-        setError("Erro ao carregar dados do usuário");
+        setError("Erro ao carregar grupos do usuário");
       }
     };
 
@@ -143,7 +195,9 @@ const Dashboard = () => {
         {/* Barra de opções */}
         <div className="bg-black/70 flex flex-col items-center justify-between p-1">
           <div className="flex flex-col items-center justify-center gap-2">
-            <ToDashboardButton></ToDashboardButton>
+            <ToDashboardButton
+              onClick={() => setSelectedGroup("")}
+            ></ToDashboardButton>
             <ToRegisterButton></ToRegisterButton>
           </div>
           <div className="flex flex-col items-center justify-center gap-2">
@@ -160,8 +214,9 @@ const Dashboard = () => {
               className="absolute top-2 right-2 text-white/80 
               hover:text-white rounded-md transition-colors duration-200 cursor-pointer"
               title="Adicionar"
+              onClick={() => handleSetCreatingGroup()}
             >
-              <FaRegSquarePlus className="text-5xl"></FaRegSquarePlus>
+              <BiMessageAdd className="text-5xl"></BiMessageAdd>
             </button>
           </div>
           <div className="w-full">
@@ -184,7 +239,13 @@ const Dashboard = () => {
 
       {/* Seção de mensagens */}
       <div className="col-span-2 h-screen flex flex-col">
-        {selectedGroup ? (
+        {creatingNewGroup && !selectedGroup ? (
+          <CreateGroup
+            onChange={(e) => setNewGroupName(e.target.value)}
+            newGroupName={newGroupName}
+            onSubmit={(e) => handleCreateNewGroup(e)}
+          ></CreateGroup>
+        ) : selectedGroup ? (
           <div className="flex flex-col h-full">
             {/* Header do grupo */}
             <div className="p-1 flex items-center justify-start gap-2 bg-black/50 rounded-full">

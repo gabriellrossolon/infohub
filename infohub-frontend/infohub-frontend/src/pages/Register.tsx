@@ -142,7 +142,7 @@ const Register: React.FC = () => {
           onSubmit={handleSubmit}
           className="flex flex-col gap-6 items-center justify-center"
         >
-          <h1 className="font-bold text-3xl text-white/90">Crie um Usuário</h1>
+          <h1 className="font-bold text-3xl text-white/90">Criar Usuário</h1>
           <div className="flex flex-col gap-2">
             <FormField
               name="Nome e Sobrenome"

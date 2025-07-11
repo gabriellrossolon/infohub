@@ -2,10 +2,15 @@ import Button from "../components/Button"
 import { useNavigate } from "react-router-dom";
 import { FiMessageSquare } from "react-icons/fi";
 
-const ToDashboardButton: React.FC = ( { } ) => {
+interface ToDashboardButtonProps{
+   onClick?: () => void;
+}
+
+const ToDashboardButton: React.FC<ToDashboardButtonProps> = ( { onClick } ) => {
   const navigate = useNavigate();
 
   const handleDashboard = () => {
+    if (onClick) onClick();
     navigate("/dashboard");
   }
 

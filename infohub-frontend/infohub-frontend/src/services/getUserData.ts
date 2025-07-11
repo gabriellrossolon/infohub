@@ -22,5 +22,6 @@ export async function getUserData(token: string) {
     userId: user.id,
     userName: user.name,
     companyName: company.name,
+    companyId: company.id
   };
 }
