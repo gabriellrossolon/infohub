@@ -8,6 +8,8 @@ import ToRegisterButton from "../fixed-components/ToRegisterButton";
 import ToDashboardButton from "../fixed-components/ToDashboardButton";
 import ToSettingsButton from "../fixed-components/ToSettingsButton";
 import { getGroupMessages } from "../services/getGroupMessages";
+import SelectFormField from "../components/SelectFormField";
+import { FaRegSquarePlus } from "react-icons/fa6";
 
 const Dashboard = () => {
   //Exibições no lado esquerdo (grupos e opções)
@@ -19,6 +21,11 @@ const Dashboard = () => {
   const [selectedGroup, setSelectedGroup] = useState<any | null>(null);
   const [groupMessages, setGroupMessages] = useState<any[]>([]);
 
+  const [availeMessageCategories, setAvaibleMessageCategories] = useState<
+    string[]
+  >([]);
+  const [selectedMessageCategory, setSelectedMessageCategory] =
+    useState<string>("");
   const [inputMessage, setInputMessage] = useState<string>("");
 
   //Controles gerais
@@ -57,7 +64,7 @@ const Dashboard = () => {
     const messageData = {
       groupId: selectedGroup.id,
       userId: userData.userId,
-      messageCategory: "teste",
+      messageCategory: selectedMessageCategory,
       messageContent: inputMessage,
     };
 
@@ -86,6 +93,7 @@ const Dashboard = () => {
 
       // Limpa input
       setInputMessage("");
+      setSelectedMessageCategory("");
     } catch (err) {
       console.log("Erro ao registrar:", err);
       alert("Erro ao conectar com o servidor.");
@@ -96,6 +104,13 @@ const Dashboard = () => {
     const fetchData = async () => {
       const token = localStorage.getItem("token");
       if (!token || !isTokenValid(token)) return;
+
+      setAvaibleMessageCategories([
+        "Feedback",
+        "Aviso",
+        "Reclamação",
+        "Solicitação",
+      ]);
 
       try {
         // Busca nomes do usuário e empresa
@@ -138,9 +153,16 @@ const Dashboard = () => {
         </div>
         {/* Seleção de grupos */}
         <div className="flex flex-col items-start w-full">
-          <div className="flex flex-col items-center justify-center border-b-1 border-white/20 p-1 w-full">
+          <div className="flex flex-col items-center justify-center border-b border-white/20 p-1 w-full relative">
             <h1 className="text-3xl font-bold">{companyName.toUpperCase()}</h1>
             <h1 className="text-gray-200">{userName.toUpperCase()}</h1>
+            <button
+              className="absolute top-2 right-2 text-white/80 
+              hover:text-white rounded-md transition-colors duration-200 cursor-pointer"
+              title="Adicionar"
+            >
+              <FaRegSquarePlus className="text-5xl"></FaRegSquarePlus>
+            </button>
           </div>
           <div className="w-full">
             {groups.map((group) => (
@@ -184,11 +206,8 @@ const Dashboard = () => {
                   .slice()
                   .reverse()
                   .map((groupMessage) => (
-                    <div
-                      key={groupMessage.id}
-                      className="flex items-center w-fit py-0 px-1"
-                    >
-                      <div className="bg-white/60 rounded-l-md">
+                    <div key={groupMessage.id} className="flex w-fit px-1">
+                      <div className="bg-white/60 rounded-l-md flex items-center">
                         <p className="py-1 px-2 text-black font-semibold">
                           {groupMessage.messageCategory}
                         </p>
@@ -197,31 +216,43 @@ const Dashboard = () => {
                         <p className="text-gray-200 py-1 px-2">
                           {groupMessage.messageContent}
                         </p>
-                        <span className="text-gray-400 text-sm px-1">
+                        <span className="text-gray-400 text-sm px-1 self-end">
                           {new Date(groupMessage.sendTime).toLocaleTimeString(
                             [],
-                            { hour: "2-digit", minute: "2-digit" }
+                            {
+                              hour: "2-digit",
+                              minute: "2-digit",
+                            }
                           )}
                         </span>
                       </div>
                     </div>
                   ))}
-                  <div ref={bottomRef} />
+                <div ref={bottomRef} />
               </div>
             </div>
 
             {/* Input de Mensangens */}
             <form
               onSubmit={(e) => handleSendMessage(e)}
-              className="p-2 border-t border-white/10 bg-black/50 flex items-center gap-2"
+              className=" p-2 border-t border-white/10 bg-black/50 flex items-center justify-center gap-2"
             >
               <input
                 type="text"
                 value={inputMessage}
+                required
                 placeholder="Digite sua mensagem..."
                 className="flex-1 py-2 px-4 rounded-full bg-white/60 text-black"
                 onChange={(e) => setInputMessage(e.target.value)}
               />
+              <div className="">
+                <SelectFormField
+                  name=""
+                  value={selectedMessageCategory}
+                  onChange={(e) => setSelectedMessageCategory(e.target.value)}
+                  options={availeMessageCategories}
+                />
+              </div>
               <button
                 type="submit"
                 className="bg-green-500 text-white px-4 py-2 rounded-xl cursor-pointer"

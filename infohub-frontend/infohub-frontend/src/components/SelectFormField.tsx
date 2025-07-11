@@ -19,7 +19,7 @@ const SelectFormField: React.FC<SelectFormFieldProps> = ({
       <select
         value={value}
         onChange={onChange}
-        className="text-white/80 py-1 px-2 border-1 rounded-md border-white/50 min-w-[25vw]"
+        className="text-white/80 py-1 px-2 border-1 rounded-md border-white/50 w-full"
         required
       >
         <option disabled value="">
