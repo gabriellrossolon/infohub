@@ -88,6 +88,19 @@ namespace InfoHubApplication.Controllers
             });
         }
 
+        [Authorize(Roles = "admin")]
+        [HttpDelete("{id:int}")]
+        public IActionResult Remove(int id)
+        {
+            var user = _userRepository.FindById(id);
+            if (user == null)
+            {
+                return NotFound(new { message = "User não encontrado." });
+            }
+
+            _userRepository.Remove(user);
+            return NoContent();
+        }
 
         [Authorize(Roles = "admin")]
         [HttpGet]

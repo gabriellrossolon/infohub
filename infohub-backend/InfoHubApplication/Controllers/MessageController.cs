@@ -31,6 +31,21 @@ namespace InfoHubApplication.Controllers
 
             return Ok();
         }
+
+        [Authorize(Roles = "admin")]
+        [HttpDelete("{id:int}")]
+        public IActionResult Remove(int id)
+        {
+            var message = _messageRepository.FindById(id);
+            if (message == null)
+            {
+                return NotFound(new { message = "Mensagem não encontrada." });
+            }
+
+            _messageRepository.Remove(message);
+            return NoContent();
+        }
+
         [Authorize]
         [HttpGet]
         public IActionResult Get()

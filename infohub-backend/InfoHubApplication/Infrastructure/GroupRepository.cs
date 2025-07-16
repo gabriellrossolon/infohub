@@ -12,6 +12,12 @@ namespace InfoHubApplication.Infrastructure
             _context.SaveChanges();
         }
 
+        public void Remove(Group group)
+        {
+            _context.Groups.Remove(group);
+            _context.SaveChanges();
+        }
+
         public List<Group> Get()
         {
             return _context.Groups.ToList();

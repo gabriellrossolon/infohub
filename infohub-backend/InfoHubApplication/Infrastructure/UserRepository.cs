@@ -1,5 +1,4 @@
 ﻿using InfoHubApplication.Models;
-using System.Linq;
 
 namespace InfoHubApplication.Infrastructure
 {
@@ -12,7 +11,11 @@ namespace InfoHubApplication.Infrastructure
             _context.Users.Add(user);
             _context.SaveChanges();
         }
-
+        public void Remove(User user)
+        {
+            _context.Users.Remove(user);
+            _context.SaveChanges();
+        }
         public List<User> Get()
         {
             return _context.Users.ToList();

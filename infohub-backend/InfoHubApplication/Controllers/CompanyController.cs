@@ -31,6 +31,21 @@ namespace InfoHubApplication.Controllers
 
             return Ok();
         }
+
+        [Authorize(Roles = "admin")]
+        [HttpDelete("{id:int}")]
+        public IActionResult Remove(int id)
+        {
+            var company = _companyRepository.FindById(id);
+            if (company == null)
+            {
+                return NotFound(new { message = "Compania não encontrada" });
+            }
+
+            _companyRepository.Remove(company);
+            return NoContent();
+        }
+
         [Authorize]
         [HttpGet]
         public IActionResult Get()

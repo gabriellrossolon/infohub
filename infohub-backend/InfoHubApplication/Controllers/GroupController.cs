@@ -34,6 +34,20 @@ namespace InfoHubApplication.Controllers
             return Ok();
         }
 
+        [Authorize(Roles = "admin")]
+        [HttpDelete("{id:int}")]
+        public IActionResult Remove(int id)
+        {
+            var group = _groupRepository.FindById(id);
+            if (group == null)
+            {
+                return NotFound(new { message = "Grupo não encontrado." });
+            }
+
+            _groupRepository.Remove(group);
+            return NoContent();
+        }
+
         [Authorize]
         [HttpGet]
         public IActionResult Get()

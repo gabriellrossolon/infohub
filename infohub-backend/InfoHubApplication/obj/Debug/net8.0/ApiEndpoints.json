@@ -27,6 +27,22 @@
   },
   {
     "ContainingType": "InfoHubApplication.Controllers.CompanyController",
+    "Method": "Remove",
+    "RelativePath": "api/v1/company/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "InfoHubApplication.Controllers.CompanyController",
     "Method": "GetById",
     "RelativePath": "api/v1/company/{id}",
     "HttpMethod": "GET",
@@ -65,6 +81,22 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "InfoHubApplication.Controllers.GroupController",
+    "Method": "Remove",
+    "RelativePath": "api/v1/group/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {
@@ -137,6 +169,22 @@
   },
   {
     "ContainingType": "InfoHubApplication.Controllers.MessageController",
+    "Method": "Remove",
+    "RelativePath": "api/v1/message/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "InfoHubApplication.Controllers.MessageController",
     "Method": "GetMessagesByGroupId",
     "RelativePath": "api/v1/message/group/{groupId}",
     "HttpMethod": "GET",
@@ -175,6 +223,22 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "InfoHubApplication.Controllers.UserController",
+    "Method": "Remove",
+    "RelativePath": "api/v1/user/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {

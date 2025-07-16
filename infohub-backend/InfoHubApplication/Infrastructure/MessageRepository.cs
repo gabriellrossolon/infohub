@@ -12,6 +12,12 @@ namespace InfoHubApplication.Infrastructure
             _context.SaveChanges();
         }
 
+        public void Remove(Message message)
+        {
+            _context.Messages.Remove(message);
+            _context.SaveChanges();
+        }
+
         public List<Message> Get()
         {
             return _context.Messages.ToList();

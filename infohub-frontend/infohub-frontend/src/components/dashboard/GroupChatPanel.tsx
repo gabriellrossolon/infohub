@@ -4,12 +4,12 @@ import { useRef, useEffect } from "react";
 interface GroupChatPanelProps {
   selectedGroup: any;
   groupMessages: any[];
-  handleSendMessage: (e: React.FormEvent<HTMLFormElement>) => void,
-  chatInputMessage: string,
-  setChatInputMessage: (value: string) => void,
-  selectedMessageCategory: string
-  setSelectedMessageCategory: (value: string) => void,
-  availableMessagesCategories: string[]
+  handleSendMessage: (e: React.FormEvent<HTMLFormElement>) => void;
+  chatInputMessage: string;
+  setChatInputMessage: (value: string) => void;
+  selectedMessageCategory: string;
+  setSelectedMessageCategory: (value: string) => void;
+  availableMessagesCategories: string[];
 }
 
 const GroupChatPanel: React.FC<GroupChatPanelProps> = ({
@@ -20,9 +20,24 @@ const GroupChatPanel: React.FC<GroupChatPanelProps> = ({
   setChatInputMessage,
   selectedMessageCategory,
   setSelectedMessageCategory,
-  availableMessagesCategories
+  availableMessagesCategories,
 }) => {
   const bottomRef = useRef<HTMLDivElement>(null);
+
+  function getCategoryColor(category: string): string {
+    switch (category) {
+      case "Feedback":
+        return "#4caf50"; // verde
+      case "Aviso":
+        return "#ff9800"; // laranja
+      case "Reclamação":
+        return "#f44336"; // vermelho
+      case "Solicitação":
+        return "#2196f3"; // azul
+      default:
+        return "#9e9e9e"; // cinza padrão pra categoria desconhecida
+    }
+  }
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -46,9 +61,15 @@ const GroupChatPanel: React.FC<GroupChatPanelProps> = ({
             .slice()
             .reverse()
             .map((groupMessage) => (
-              <div key={groupMessage.id} className="flex w-fit px-1">
-                <div className="bg-white/60 rounded-l-md flex items-center">
-                  <p className="py-1 px-2 text-black font-semibold">
+              <div key={groupMessage.id} className="flex px-1">
+                <div
+                  className="rounded-l-md flex items-center"
+                  style={{
+                    backgroundColor:
+                      getCategoryColor(groupMessage.messageCategory) + "99",
+                  }}
+                >
+                  <p className="py-1 px-2 text-black font-semibold min-w-28">
                     {groupMessage.messageCategory}
                   </p>
                 </div>
