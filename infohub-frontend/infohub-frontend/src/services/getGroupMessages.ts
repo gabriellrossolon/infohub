@@ -1,5 +1,7 @@
+import { API_ROUTES } from "../api/apiRoutes";
+
 export async function getGroupMessages(token: string, groupId: number) {
-  const response = await fetch(`https://localhost:7103/api/v1/message/group/${groupId}`, {
+  const response = await fetch(API_ROUTES.GROUP_MESSAGES(groupId), {
     headers: {
       Authorization: `Bearer ${token}`,
     },

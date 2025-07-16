@@ -1,5 +1,7 @@
+import { API_ROUTES } from "../api/apiRoutes";
+
 export async function getCompanies(token: string) {
-  const response = await fetch("https://localhost:7103/api/v1/company", {
+  const response = await fetch(API_ROUTES.COMPANY, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

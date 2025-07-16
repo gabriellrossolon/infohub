@@ -4,10 +4,11 @@ import SelectFormField from "../components/SelectFormField";
 import type { UserRole } from "../types/roles";
 import LogoutButton from "../fixed-components/LogoutButton";
 import ToDashboardButton from "../fixed-components/ToDashboardButton";
-import { isTokenValid, getTokenData } from "../utils/auth";
+import { getTokenData, getValidToken } from "../utils/auth";
 import { useNavigate } from "react-router-dom";
 import { getMyCompanies } from "../services/getMyCompanies";
 import { getCompanies } from "../services/getCompanies";
+import { API_ROUTES } from "../api/apiRoutes";
 
 interface UserCompany {
   id: number;
@@ -30,8 +31,8 @@ const Register: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token || !isTokenValid(token)) return;
+    const token = getValidToken();
+    if (!token) return;
 
     const data = getTokenData(token);
     const role = data?.role;
@@ -81,7 +82,9 @@ const Register: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const token = localStorage.getItem("token");
+
+    const token = getValidToken();
+    if (!token) return;
 
     if (!userName || !userEmail || !userPassword || !userCompany || !userRole) {
       alert("Preencha todos os campos!");
@@ -93,22 +96,20 @@ const Register: React.FC = () => {
       return;
     }
 
-    const userData = {
-      name: userName,
-      email: userEmail,
-      password: userPassword,
-      companyId: userCompany,
-      role: userRole,
-    };
-
     try {
-      const response = await fetch("https://localhost:7103/api/v1/user", {
+      const response = await fetch(API_ROUTES.USER, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(userData),
+        body: JSON.stringify({
+          name: userName,
+          email: userEmail,
+          password: userPassword,
+          companyId: userCompany,
+          role: userRole,
+        }),
       });
 
       let data = null;

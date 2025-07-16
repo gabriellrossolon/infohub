@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { getMyGroups } from "../services/getMyGroups";
-import { isTokenValid } from "../utils/auth";
+import { getValidToken } from "../utils/auth";
 import { getUserData } from "../services/getUserData";
 import { getGroupMessages } from "../services/getGroupMessages";
 import CreateGroup from "./CreateGroup";
 import OptionsSideBar from "../components/dashboard/OptionsSideBar";
 import GroupsList from "../components/dashboard/GroupsList";
 import GroupChatPanel from "../components/dashboard/GroupChatPanel";
+import { API_ROUTES } from "../api/apiRoutes";
 
 const Dashboard = () => {
   // Dados do usuário e empresa
@@ -34,8 +35,8 @@ const Dashboard = () => {
   const [error, setError] = useState<string | null>(null);
 
   const fetchUserData = async () => {
-    const token = localStorage.getItem("token");
-    if (!token || !isTokenValid(token)) return;
+    const token = getValidToken();
+    if (!token) return;
 
     try {
       // Busca nomes do usuário e empresa
@@ -64,37 +65,29 @@ const Dashboard = () => {
   const handleCreateNewGroup = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const token = localStorage.getItem("token");
-    if (!token || !isTokenValid(token)) return;
-
-    if (!newGroupName) return;
-
-    const userData = await getUserData(token);
-
-    const groupData = {
-      name: newGroupName,
-      companyId: userData.companyId,
-    };
+    const token = getValidToken();
+    if (!token || !newGroupName) return;
 
     try {
-      const response = await fetch("https://localhost:7103/api/v1/group", {
+      const userData = await getUserData(token);
+
+      const response = await fetch(API_ROUTES.GROUP, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(groupData),
+        body: JSON.stringify({
+          name: newGroupName,
+          companyId: userData.companyId,
+        }),
       });
 
-      if (!response.ok) {
-        throw new Error("Erro ao criar novo grupo.");
-      }
+      if (!response.ok) throw new Error("Erro ao criar novo grupo.");
 
       setNewGroupName("");
       setCreatingNewGroup(false);
-
-      const data = await getMyGroups(token);
-      setGroups(data);
+      setGroups(await getMyGroups(token));
     } catch (err) {
       console.log("Erro ao registrar:", err);
       alert("Erro ao conectar com o servidor.");
@@ -102,16 +95,14 @@ const Dashboard = () => {
   };
 
   const handleSelectGroup = async (group: any) => {
-    const token = localStorage.getItem("token");
-    if (!token || !isTokenValid(token)) return;
+    const token = getValidToken();
+    if (!token) return;
 
     setSelectedGroup(group);
     setCreatingNewGroup(false);
 
     try {
-      // Busca mensagens do grupo selecionado
-      const data = await getGroupMessages(token, group.id);
-      setGroupMessages(data);
+      setGroupMessages(await getGroupMessages(token, group.id));
     } catch (err) {
       console.error("Erro ao carregar dados:", err);
       setError("Erro ao carregar mensagens do grupo");
@@ -121,47 +112,29 @@ const Dashboard = () => {
   const handleSendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const token = localStorage.getItem("token");
-    if (!token || !isTokenValid(token)) return;
-
-    if (!chatInputMessage || chatInputMessage === "") {
-      alert("Não é possivel enviar mensagem sem conteúdo!");
-      return;
-    }
-
-    const userData = await getUserData(token);
-
-    const messageData = {
-      groupId: selectedGroup.id,
-      userId: userData.userId,
-      messageCategory: selectedMessageCategory,
-      messageContent: chatInputMessage,
-    };
+    const token = getValidToken();
+    if (!token) return;
+    if (!chatInputMessage || chatInputMessage === "") return;
 
     try {
-      const response = await fetch("https://localhost:7103/api/v1/message", {
+      const userData = await getUserData(token);
+      const response = await fetch(API_ROUTES.MESSAGE, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(messageData),
+        body: JSON.stringify({
+          groupId: selectedGroup.id,
+          userId: userData.userId,
+          messageCategory: selectedMessageCategory,
+          messageContent: chatInputMessage
+        }),
       });
 
-      if (!response.ok) {
-        throw new Error("Erro ao enviar mensagem");
-      }
+      if (!response.ok) throw new Error("Erro ao enviar mensagem");
 
-      try {
-        // Busca mensagens do grupo selecionado
-        const data = await getGroupMessages(token, selectedGroup.id);
-        setGroupMessages(data);
-      } catch (err) {
-        console.error("Erro ao carregar dados:", err);
-        setError("Erro ao carregar mensagens do grupo");
-      }
-
-      // Limpa input
+      setGroupMessages(await getGroupMessages(token, selectedGroup.id));
       setChatInputMessage("");
       setSelectedMessageCategory("");
     } catch (err) {

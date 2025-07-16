@@ -25,3 +25,8 @@ export const getTokenData = (token: string): JwtPayload | null => {
     return null;
   }
 };
+
+export const getValidToken = () => {
+  const token = localStorage.getItem("token");
+  return token && isTokenValid(token) ? token : null;
+};
