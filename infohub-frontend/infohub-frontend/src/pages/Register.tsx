@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { getMyCompanies } from "../services/getMyCompanies";
 import { getCompanies } from "../services/getCompanies";
 import { API_ROUTES } from "../api/apiRoutes";
+import ErrorWarn from "../fixed-components/ErrorWarn";
 
 interface UserCompany {
   id: number;
@@ -27,6 +28,9 @@ const Register: React.FC = () => {
     []
   );
   const [availableRoles, setAvailableRoles] = useState<UserRole[]>([]);
+
+  // UI e erros
+  const [error, setError] = useState<string | null>(null);
 
   const navigate = useNavigate();
 
@@ -87,12 +91,12 @@ const Register: React.FC = () => {
     if (!token) return;
 
     if (!userName || !userEmail || !userPassword || !userCompany || !userRole) {
-      alert("Preencha todos os campos!");
+      setError("Faltam campos a ser preenchidos!")
       return;
     }
 
     if (userPassword !== userRepeatedPassword) {
-      alert("As senhas não coincidem.");
+      setError("As senhas não coincidem!")
       return;
     }
 
@@ -113,18 +117,16 @@ const Register: React.FC = () => {
       });
 
       let data = null;
-      let errorMessage = "Erro no registro";
 
       try {
         data = await response.json();
-        errorMessage = data?.message || errorMessage;
       } catch {
         const text = await response.text();
-        if (text) errorMessage = text;
+        if (text) setError(text);
       }
 
       if (!response.ok) {
-        alert(errorMessage);
+        setError(data?.message || "Erro no registro");
         return;
       }
 
@@ -202,6 +204,7 @@ const Register: React.FC = () => {
           <ToDashboardButton />
         </div>
       </div>
+      {error && <ErrorWarn text={error} setError={setError}/>}
     </div>
   );
 };

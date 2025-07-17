@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import FormField from "../components/FormField";
 import { isTokenValid } from "../utils/auth";
+import ErrorWarn from "../fixed-components/ErrorWarn";
 
 interface LoginProps {}
 
@@ -9,6 +10,9 @@ const Login: React.FC<LoginProps> = ({}) => {
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const navigate = useNavigate();
+
+  // UI e erros
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -40,7 +44,8 @@ const Login: React.FC<LoginProps> = ({}) => {
       const data = await response.json();
 
       if (!response.ok) {
-        alert(data.message || "Erro no Login");
+        setError(data.message || "Erro no Login")
+        // alert(error);
         return;
       }
       localStorage.setItem("token", data.token);
@@ -54,8 +59,8 @@ const Login: React.FC<LoginProps> = ({}) => {
   };
 
   return (
-    <div className="h-screen bg-black/50 flex items-center justify-center">
-      <div className="bg-white/10 p-4 rounded-md">
+    <div className="h-screen bg-black/50 flex items-center justify-center ">
+      <div className="bg-white/10 p-4 rounded-md backdrop-blur">
         <form
           onSubmit={handleSubmit}
           className="flex flex-col gap-6 items-center justify-center"
@@ -88,6 +93,8 @@ const Login: React.FC<LoginProps> = ({}) => {
           </button>
         </form>
       </div>
+      {error && <ErrorWarn text={error} setError={setError}/>}
+      
     </div>
   );
 };
