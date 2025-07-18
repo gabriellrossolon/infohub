@@ -8,6 +8,7 @@ import OptionsSideBar from "../components/dashboard/OptionsSideBar";
 import GroupsList from "../components/dashboard/GroupsList";
 import GroupChatPanel from "../components/dashboard/GroupChatPanel";
 import { API_ROUTES } from "../api/apiRoutes";
+import { deleteMessage } from "../services/deleteMessage";
 
 const Dashboard = () => {
   // Dados do usuário e empresa
@@ -143,6 +144,19 @@ const Dashboard = () => {
     }
   };
 
+  const handleDeleteMessage = async (messageId: number) => {
+    const token = getValidToken();
+    if (!token) return;
+
+    try {
+      await deleteMessage(token, messageId);
+      setGroupMessages(await getGroupMessages(token, selectedGroup.id))
+    } catch (err) {
+      console.error("Erro ao deletar a mensagem", err);
+      alert("Erro ao deletar a mensagem");
+    }
+  };
+
   if (error) return <div className="text-red-500 p-4">{error}</div>;
 
   return (
@@ -174,6 +188,7 @@ const Dashboard = () => {
             selectedGroup={selectedGroup}
             groupMessages={groupMessages}
             handleSendMessage={handleSendMessage}
+            handleDeleteMessage={handleDeleteMessage}
             chatInputMessage={chatInputMessage}
             setChatInputMessage={setChatInputMessage}
             selectedMessageCategory={selectedMessageCategory}
