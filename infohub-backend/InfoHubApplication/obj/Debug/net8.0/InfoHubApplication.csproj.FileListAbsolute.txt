@@ -37,7 +37,6 @@ C:\Users\Sistema - Asstramed\Desktop\Pessoal\Dev\1_PROJETOS\InfoHub\infohub-back
 C:\Users\Sistema - Asstramed\Desktop\Pessoal\Dev\1_PROJETOS\InfoHub\infohub-backend\InfoHubApplication\obj\Debug\net8.0\staticwebassets.build.json.cache
 C:\Users\Sistema - Asstramed\Desktop\Pessoal\Dev\1_PROJETOS\InfoHub\infohub-backend\InfoHubApplication\obj\Debug\net8.0\staticwebassets.development.json
 C:\Users\Sistema - Asstramed\Desktop\Pessoal\Dev\1_PROJETOS\InfoHub\infohub-backend\InfoHubApplication\obj\Debug\net8.0\staticwebassets.build.endpoints.json
-C:\Users\Sistema - Asstramed\Desktop\Pessoal\Dev\1_PROJETOS\InfoHub\infohub-backend\InfoHubApplication\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 C:\Users\Sistema - Asstramed\Desktop\Pessoal\Dev\1_PROJETOS\InfoHub\infohub-backend\InfoHubApplication\obj\Debug\net8.0\InfoHubA.AC68167D.Up2Date
 C:\Users\Sistema - Asstramed\Desktop\Pessoal\Dev\1_PROJETOS\InfoHub\infohub-backend\InfoHubApplication\obj\Debug\net8.0\InfoHubApplication.dll
 C:\Users\Sistema - Asstramed\Desktop\Pessoal\Dev\1_PROJETOS\InfoHub\infohub-backend\InfoHubApplication\obj\Debug\net8.0\refint\InfoHubApplication.dll
@@ -54,3 +53,4 @@ C:\Users\Sistema - Asstramed\Desktop\Pessoal\Dev\1_PROJETOS\InfoHub\infohub-back
 C:\Users\Sistema - Asstramed\Desktop\Pessoal\Dev\1_PROJETOS\InfoHub\infohub-backend\InfoHubApplication\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 C:\Users\Sistema - Asstramed\Desktop\Pessoal\Dev\1_PROJETOS\InfoHub\infohub-backend\InfoHubApplication\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
 C:\Users\Sistema - Asstramed\Desktop\Pessoal\Dev\1_PROJETOS\InfoHub\infohub-backend\InfoHubApplication\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\Sistema - Asstramed\Desktop\Pessoal\Dev\1_PROJETOS\InfoHub\infohub-backend\InfoHubApplication\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

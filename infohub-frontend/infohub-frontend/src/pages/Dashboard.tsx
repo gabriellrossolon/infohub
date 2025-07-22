@@ -9,6 +9,7 @@ import GroupsList from "../components/dashboard/GroupsList";
 import GroupChatPanel from "../components/dashboard/GroupChatPanel";
 import { API_ROUTES } from "../api/apiRoutes";
 import { deleteMessage } from "../services/deleteMessage";
+import { deleteGroup } from "../services/deleteGroup";
 
 const Dashboard = () => {
   // Dados do usuário e empresa
@@ -46,8 +47,7 @@ const Dashboard = () => {
       setCompanyName(companyName);
 
       // Busca grupos
-      const data = await getMyGroups(token);
-      setGroups(data);
+      setGroups(await getMyGroups(token));
     } catch (err) {
       console.error("Erro ao carregar dados:", err);
       setError("Erro ao carregar grupos do usuário");
@@ -95,6 +95,20 @@ const Dashboard = () => {
     }
   };
 
+  const handleDeleteGroup = async (groupId: number) => {
+    const token = getValidToken();
+    if (!token) return;
+
+    try {
+      await deleteGroup(token, groupId);
+      setGroups(await getMyGroups(token));
+      setSelectedGroup("")
+    } catch (err) {
+      console.error("Erro ao deletar o grupo: ", err);
+      alert("Erro ao deletar o grupo");
+    }
+  };
+
   const handleSelectGroup = async (group: any) => {
     const token = getValidToken();
     if (!token) return;
@@ -129,7 +143,7 @@ const Dashboard = () => {
           groupId: selectedGroup.id,
           userId: userData.userId,
           messageCategory: selectedMessageCategory,
-          messageContent: chatInputMessage
+          messageContent: chatInputMessage,
         }),
       });
 
@@ -150,7 +164,7 @@ const Dashboard = () => {
 
     try {
       await deleteMessage(token, messageId);
-      setGroupMessages(await getGroupMessages(token, selectedGroup.id))
+      setGroupMessages(await getGroupMessages(token, selectedGroup.id));
     } catch (err) {
       console.error("Erro ao deletar a mensagem", err);
       alert("Erro ao deletar a mensagem");
@@ -187,6 +201,7 @@ const Dashboard = () => {
           <GroupChatPanel
             selectedGroup={selectedGroup}
             groupMessages={groupMessages}
+            handleDeleteGroup={handleDeleteGroup}
             handleSendMessage={handleSendMessage}
             handleDeleteMessage={handleDeleteMessage}
             chatInputMessage={chatInputMessage}

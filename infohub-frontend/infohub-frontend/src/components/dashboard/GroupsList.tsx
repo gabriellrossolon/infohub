@@ -8,9 +8,9 @@ interface GroupsListProps {
   handleSelectGroup: (group: any) => void,
 }
 
-const GroupsList: React.FC<GroupsListProps> = ({companyName, userName,groups ,handleSelectGroup, handleSetCreatingGroup}) => {
+const GroupsList: React.FC<GroupsListProps> = ({companyName, userName, groups, handleSelectGroup, handleSetCreatingGroup}) => {
   return (
-    <div className="flex flex-col items-start w-full">
+    <div className="flex flex-col items-start w-full backdrop-blur">
       <div className="flex flex-col items-center justify-center border-b border-white/20 p-1 w-full relative">
         <h1 className="text-3xl font-bold">{companyName.toUpperCase()}</h1>
         <h1 className="text-gray-200">{userName.toUpperCase()}</h1>

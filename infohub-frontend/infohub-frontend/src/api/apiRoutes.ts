@@ -9,6 +9,7 @@ export const API_ROUTES = {
   MY_GROUPS: `${BASE_URL}/group/my-groups`,
   //Rotas Dinâmicas
   COMPANY_BY_ID: (companyId: string | number) => `${BASE_URL}/company/${companyId}`,
+  GROUP_BY_ID: (groupId: string | number) => `${BASE_URL}/group/${groupId}`,
   MESSAGE_BY_ID: (messageId: number) => `${BASE_URL}/message/${messageId}`,
   USER_BY_ID: (userId: string | number) => `${BASE_URL}/user/${userId}`,
   GROUP_MESSAGES: (groupId: string | number) => `${BASE_URL}/message/group/${groupId}`,

@@ -21,5 +21,17 @@ namespace InfoHubApplication.Infrastructure
                 new MySqlServerVersion(new Version(8, 0, 42))
             );
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Message>()
+                .HasOne(m => m.Group)
+                .WithMany(g => g.Messages)
+                .HasForeignKey(m => m.GroupId)
+                .OnDelete(DeleteBehavior.Cascade); // 👈 Isso é o que habilita a deleção em cascata
+        }
+
     }
 }
