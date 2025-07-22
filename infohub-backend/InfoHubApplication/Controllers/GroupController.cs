@@ -34,7 +34,7 @@ namespace InfoHubApplication.Controllers
             return Ok();
         }
 
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin,manager")]
         [HttpDelete("{id:int}")]
         public IActionResult Remove(int id)
         {

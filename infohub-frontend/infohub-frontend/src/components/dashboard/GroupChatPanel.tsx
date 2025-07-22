@@ -2,6 +2,7 @@ import SelectFormField from "../SelectFormField";
 import { useRef, useEffect, useState } from "react";
 import { FiChevronDown } from "react-icons/fi";
 import { CiCircleInfo, CiTrash } from "react-icons/ci";
+import { getTokenData, getValidToken } from "../../utils/auth";
 
 interface GroupChatPanelProps {
   selectedGroup: any;
@@ -29,6 +30,7 @@ const GroupChatPanel: React.FC<GroupChatPanelProps> = ({
   const bottomRef = useRef<HTMLDivElement>(null);
   const [activeMessageId, setActiveMessageId] = useState<number | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
+  const [userRole, setUserRole] = useState<string | null>();
 
   function getCategoryColor(category: string): string {
     switch (category) {
@@ -46,6 +48,12 @@ const GroupChatPanel: React.FC<GroupChatPanelProps> = ({
   }
 
   useEffect(() => {
+    const token = getValidToken();
+    if (!token) return;
+
+    const data = getTokenData(token);
+    setUserRole(data?.role);
+
     function handleClickOutside(event: MouseEvent) {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
         setActiveMessageId(null);
@@ -120,7 +128,7 @@ const GroupChatPanel: React.FC<GroupChatPanelProps> = ({
                             alert(
                               "O ID da mensagem é: " +
                                 groupMessage.id +
-                                "\nE ela foi enviada em: " +
+                                "\nMensagem enviada em: " +
                                 new Date(groupMessage.sendTime).toLocaleString(
                                   "pt-BR",
                                   {
@@ -138,13 +146,15 @@ const GroupChatPanel: React.FC<GroupChatPanelProps> = ({
                           <CiCircleInfo className="text-xl" />
                           <span className="text-md">Dados</span>
                         </button>
-                        <button
-                          onClick={() => handleDeleteMessage(groupMessage.id)}
-                          className="flex items-center justify-center text-red-400 gap-1 font-bold cursor-pointer"
-                        >
-                          <CiTrash className="text-xl" />
-                          <span className="text-md">Apagar</span>
-                        </button>
+                        {(userRole === "admin" || userRole === "manager") && (
+                          <button
+                            onClick={() => handleDeleteMessage(groupMessage.id)}
+                            className="flex items-center justify-center text-red-400 gap-1 font-bold cursor-pointer"
+                          >
+                            <CiTrash className="text-xl" />
+                            <span className="text-md">Apagar</span>
+                          </button>
+                        )}
                       </div>
                     )}
                     <span className="text-gray-400 text-sm">
