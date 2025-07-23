@@ -12,8 +12,6 @@ namespace InfoHubApplication.Models
         public int CompanyId {  get; private set; }
         public DateTime CreationDate { get; private set; }
 
-        public ICollection<Message> Messages { get; private set; } = new List<Message>();
-
         public Group(string name, int companyId)
         {
             this.Name = name ?? throw new ArgumentNullException(nameof(name));

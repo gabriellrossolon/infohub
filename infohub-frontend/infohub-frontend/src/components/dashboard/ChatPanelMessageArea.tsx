@@ -1,6 +1,8 @@
 import { FiChevronDown } from "react-icons/fi";
 import { CiCircleInfo, CiTrash } from "react-icons/ci";
 import { useEffect, useRef } from "react";
+import { getUserDataById } from "../../services/getUserDataById";
+import { getValidToken } from "../../utils/auth";
 
 interface GroupChatPanelMessageAreaProps {
   groupMessages: any[];
@@ -35,11 +37,18 @@ const GroupChatPanelMessageArea: React.FC<GroupChatPanelMessageAreaProps> = ({
     }
   }
 
-  const handleShowMessageInfo = (groupMessage: any) => {
+  const handleShowMessageInfo = async (groupMessage: any) => {
+    const token = getValidToken();
+    if (!token) return;
+
+    const userData = await getUserDataById(token, groupMessage.userId);
+
     setActiveMessageId(null);
     alert(
       "O ID da mensagem é: " +
         groupMessage.id +
+        "\nEnviada por: " +
+        userData.name.toUpperCase() +
         "\nMensagem enviada em: " +
         new Date(groupMessage.sendTime).toLocaleString("pt-BR", {
           day: "2-digit",

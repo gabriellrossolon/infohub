@@ -1,4 +1,4 @@
-import Button from "../components/Button"
+import Button from "../Button";
 import { useNavigate } from "react-router-dom";
 import { FiMessageSquare } from "react-icons/fi";
 

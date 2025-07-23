@@ -1,42 +1,59 @@
 import { BiMessageAdd } from "react-icons/bi";
 
 interface GroupsListProps {
-  companyName: string,
-  userName: string,
-  groups: any[]; 
-  handleSetCreatingGroup: () => void,
-  handleSelectGroup: (group: any) => void,
+  companyName: string;
+  userName: string;
+  groups: any[];
+  handleSetCreatingGroup: () => void;
+  handleSelectGroup: (group: any) => void;
+  selectedGroupId: number | null;
 }
 
-const GroupsList: React.FC<GroupsListProps> = ({companyName, userName, groups, handleSelectGroup, handleSetCreatingGroup}) => {
+const GroupsList: React.FC<GroupsListProps> = ({
+  companyName,
+  userName,
+  groups,
+  handleSelectGroup,
+  handleSetCreatingGroup,
+  selectedGroupId,
+}) => {
   return (
     <div className="flex flex-col items-start w-full backdrop-blur">
       <div className="flex flex-col items-center justify-center border-b border-white/20 p-1 w-full relative">
-        <h1 className="text-3xl font-bold">{companyName.toUpperCase()}</h1>
-        <h1 className="text-gray-200">{userName.toUpperCase()}</h1>
+        {/* <h1 className="text-3xl font-bold">{companyName.toUpperCase()}</h1> */}
+        <h1 className="text-3xl font-bold text-gray-100">
+          Info<strong className="text-blue-500">HUB</strong>
+        </h1>
+        <h2 className="text-gray-200 text-center tracking-wide uppercase">
+          {userName + " - " + companyName}
+        </h2>
         <button
           className="absolute top-2 right-2 text-white/80 
               hover:text-white rounded-md transition-colors duration-200 cursor-pointer"
           title="Adicionar"
           onClick={() => handleSetCreatingGroup()}
         >
-          <BiMessageAdd className="text-5xl"></BiMessageAdd>
+          <BiMessageAdd className="text-5xl" />
         </button>
       </div>
-      <div className="w-full">
-        {groups.map((group) => (
-          <div
-            key={group.id}
-            className="flex items-center justify-start gap-2 p-1 m-1 rounded-xl cursor-pointer hover:bg-black/30 w=full"
-            onClick={() => handleSelectGroup(group)}
-          >
-            <img src="user.png" alt="Foto do Grupo" className="max-h-16" />
-            <div className="flex flex-col">
-              <h3 className="font-semibold">{group.name}</h3>
-              <p className="text-gray-300">Implementar last message...</p>
+      <div className="w-full flex-1 overflow-y-auto no-scrollbar">
+        {groups.map((group) => {
+          const isSelected = group.id === selectedGroupId;
+          return (
+            <div
+              key={group.id}
+              className={`flex items-center justify-start gap-2 p-1 m-1 rounded-xl cursor-pointer 
+              hover:bg-white/10 w=full ${isSelected ? "bg-white/20" : ""}`}
+              onClick={() => handleSelectGroup(group)}
+            >
+              <img src="user.png" alt="Foto do Grupo" className="max-h-16" />
+              <div className="flex flex-col">
+                <h3 className="font-semibold">{group.name}</h3>
+                <p className="text-gray-300">Implementar last message...</p>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );

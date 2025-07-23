@@ -19,11 +19,13 @@ const Dashboard = () => {
   // Grupos e seleção
   const [groups, setGroups] = useState<any[]>([]);
   const [selectedGroup, setSelectedGroup] = useState<any | null>(null);
+  const [selectedGroupId, setSelectedGroupId] = useState<number | null>(null);
   const [creatingNewGroup, setCreatingNewGroup] = useState(false);
   const [newGroupName, setNewGroupName] = useState("");
 
   // Mensagens do grupo
   const [groupMessages, setGroupMessages] = useState<any[]>([]);
+  const [activeMessageId, setActiveMessageId] = useState<number | null>(null);
   const [availableMessageCategories] = useState<string[]>([
     "Feedback",
     "Aviso",
@@ -59,7 +61,7 @@ const Dashboard = () => {
   }, []);
 
   const handleSetCreatingGroup = () => {
-    setSelectedGroup("");
+    handleSelectGroup(null);
     setCreatingNewGroup(!creatingNewGroup);
   };
 
@@ -102,18 +104,25 @@ const Dashboard = () => {
     try {
       await deleteGroup(token, groupId);
       setGroups(await getMyGroups(token));
-      setSelectedGroup("")
+      setSelectedGroup("");
     } catch (err) {
       console.error("Erro ao deletar o grupo: ", err);
       alert("Erro ao deletar o grupo");
     }
   };
 
-  const handleSelectGroup = async (group: any) => {
+  const handleSelectGroup = async (group: any | null) => {
     const token = getValidToken();
     if (!token) return;
 
+    if (!group) {
+    setSelectedGroup(null);
+    setSelectedGroupId(null);
+    return;
+  }
+
     setSelectedGroup(group);
+    setSelectedGroupId(group.id);
     setCreatingNewGroup(false);
 
     try {
@@ -178,7 +187,7 @@ const Dashboard = () => {
       {/* Seção de seleção de grupos e opções */}
       <div className="col-span-1 h-screen bg-black/50 text-white border-r-1 border-white/20 flex">
         {/* Barra lateral de opções */}
-        <OptionsSideBar onClick={() => setSelectedGroup("")}></OptionsSideBar>
+        <OptionsSideBar onClick={() => handleSelectGroup(null)} />
         {/* Seleção de grupos */}
         <GroupsList
           companyName={companyName}
@@ -186,7 +195,8 @@ const Dashboard = () => {
           groups={groups}
           handleSetCreatingGroup={handleSetCreatingGroup}
           handleSelectGroup={handleSelectGroup}
-        ></GroupsList>
+          selectedGroupId={selectedGroupId}
+        />
       </div>
 
       {/* Seção chat de mensagens */}
@@ -196,7 +206,7 @@ const Dashboard = () => {
             onChange={(e) => setNewGroupName(e.target.value)}
             newGroupName={newGroupName}
             onSubmit={(e) => handleCreateNewGroup(e)}
-          ></CreateGroup>
+          />
         ) : selectedGroup ? (
           <GroupChatPanel
             selectedGroup={selectedGroup}
@@ -209,7 +219,9 @@ const Dashboard = () => {
             selectedMessageCategory={selectedMessageCategory}
             setSelectedMessageCategory={setSelectedMessageCategory}
             availableMessagesCategories={availableMessageCategories}
-          ></GroupChatPanel>
+            activeMessageId={activeMessageId}
+            setActiveMessageId={setActiveMessageId}
+          />
         ) : (
           <div className="flex-1 flex items-center justify-center">
             <p className=" text-gray-300">

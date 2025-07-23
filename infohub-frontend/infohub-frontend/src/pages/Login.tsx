@@ -2,8 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import FormField from "../components/FormField";
 import { isTokenValid } from "../utils/auth";
-import ErrorWarn from "../fixed-components/ErrorWarn";
-
+import ErrorWarn from "../components/fixed-components/ErrorWarn";
 interface LoginProps {}
 
 const Login: React.FC<LoginProps> = ({}) => {

@@ -2,14 +2,13 @@ import { useEffect, useState } from "react";
 import FormField from "../components/FormField";
 import SelectFormField from "../components/SelectFormField";
 import type { UserRole } from "../types/roles";
-import LogoutButton from "../fixed-components/LogoutButton";
-import ToDashboardButton from "../fixed-components/ToDashboardButton";
 import { getTokenData, getValidToken } from "../utils/auth";
 import { useNavigate } from "react-router-dom";
 import { getMyCompanies } from "../services/getMyCompanies";
 import { getCompanies } from "../services/getCompanies";
 import { API_ROUTES } from "../api/apiRoutes";
-import ErrorWarn from "../fixed-components/ErrorWarn";
+import ErrorWarn from "../components/fixed-components/ErrorWarn";
+import OptionsSideBar from "../components/dashboard/OptionsSideBar";
 
 interface UserCompany {
   id: number;
@@ -84,19 +83,19 @@ const Register: React.FC = () => {
     }
   }, []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmitRegister = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const token = getValidToken();
     if (!token) return;
 
     if (!userName || !userEmail || !userPassword || !userCompany || !userRole) {
-      setError("Faltam campos a ser preenchidos!")
+      setError("Faltam campos a ser preenchidos!");
       return;
     }
 
     if (userPassword !== userRepeatedPassword) {
-      setError("As senhas não coincidem!")
+      setError("As senhas não coincidem!");
       return;
     }
 
@@ -139,10 +138,11 @@ const Register: React.FC = () => {
   };
 
   return (
-    <div className="h-screen bg-black/50 flex items-center justify-center">
+    <div className="h-screen bg-black/50 flex items-center justify-between">
+      <OptionsSideBar/>
       <div className="bg-white/10 p-4 rounded-md">
         <form
-          onSubmit={handleSubmit}
+          onSubmit={handleSubmitRegister}
           className="flex flex-col gap-6 items-center justify-center"
         >
           <h1 className="font-bold text-3xl text-white/90">Criar Usuário</h1>
@@ -199,12 +199,15 @@ const Register: React.FC = () => {
             Registrar
           </button>
         </form>
-        <div className="flex items-center justify-between">
+        {/* <div className="flex items-center justify-between">
           <LogoutButton />
           <ToDashboardButton />
-        </div>
+        </div> */}
       </div>
-      {error && <ErrorWarn text={error} setError={setError}/>}
+      <div>
+
+      </div>
+      {error && <ErrorWarn text={error} setError={setError} />}
     </div>
   );
 };

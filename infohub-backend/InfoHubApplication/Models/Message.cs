@@ -14,8 +14,6 @@ namespace InfoHubApplication.Models
         public string MessageContent { get; private set; }
         public DateTime SendTime { get; private set; }
 
-        public Group Group { get; set; } //Diz ao EFCore que a Message tem vinculo com Group
-
         public Message(int groupId, int userId, string messageCategory, string messageContent)
         {
             this.GroupId = groupId;

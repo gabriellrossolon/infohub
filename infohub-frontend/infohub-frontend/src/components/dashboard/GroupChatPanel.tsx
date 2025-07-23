@@ -1,9 +1,7 @@
-import { useEffect, useState } from "react";
-
-import { getTokenData, getValidToken } from "../../utils/auth";
 import GroupChatPanelMessageArea from "./ChatPanelMessageArea";
 import GroupChatPanelMessageInput from "./ChatPanelMessageInput";
 import GroupChatPanelHeader from "./ChatPanelHeader";
+import { useUserRole } from "../../hooks/useUserRole";
 
 interface GroupChatPanelProps {
   selectedGroup: any;
@@ -16,6 +14,8 @@ interface GroupChatPanelProps {
   selectedMessageCategory: string;
   setSelectedMessageCategory: (value: string) => void;
   availableMessagesCategories: string[];
+  activeMessageId: number | null;
+  setActiveMessageId: React.Dispatch<React.SetStateAction<number | null>>;
 }
 
 const GroupChatPanel: React.FC<GroupChatPanelProps> = ({
@@ -29,18 +29,11 @@ const GroupChatPanel: React.FC<GroupChatPanelProps> = ({
   selectedMessageCategory,
   setSelectedMessageCategory,
   availableMessagesCategories,
+  activeMessageId,
+  setActiveMessageId,
 }) => {
-  const [activeMessageId, setActiveMessageId] = useState<number | null>(null);
 
-  const [userRole, setUserRole] = useState<string | null>();
-
-  useEffect(() => {
-    const token = getValidToken();
-    if (!token) return;
-
-    const data = getTokenData(token);
-    setUserRole(data?.role);
-  }, []);
+  const userRole = useUserRole();
 
   return (
     <div className="flex flex-col h-full">

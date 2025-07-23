@@ -35,7 +35,7 @@ const CreateGroup: React.FC<CreateGroupProps> = ({
         className="flex items-center justify-center bg-green-500 text-black p-2 rounded-full 
         cursor-pointer hover:bg-green-600 duration-200 transition-colors"
       >
-        <FaCheck className="text-4xl"></FaCheck>
+        <FaCheck className="text-4xl"/>
       </button>
     </form>
   );
