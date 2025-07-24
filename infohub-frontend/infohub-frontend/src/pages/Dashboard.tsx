@@ -101,6 +101,9 @@ const Dashboard = () => {
     const token = getValidToken();
     if (!token) return;
 
+    const confirm = window.confirm("Tem certeza que deseja deletar o grupo?");
+    if (!confirm) return;
+
     try {
       await deleteGroup(token, groupId);
       setGroups(await getMyGroups(token));
@@ -116,10 +119,10 @@ const Dashboard = () => {
     if (!token) return;
 
     if (!group) {
-    setSelectedGroup(null);
-    setSelectedGroupId(null);
-    return;
-  }
+      setSelectedGroup(null);
+      setSelectedGroupId(null);
+      return;
+    }
 
     setSelectedGroup(group);
     setSelectedGroupId(group.id);
@@ -171,6 +174,9 @@ const Dashboard = () => {
     const token = getValidToken();
     if (!token) return;
 
+    const confirm = window.confirm("Tem certeza que deseja deletar a mensagem?");
+    if (!confirm) return;
+
     try {
       await deleteMessage(token, messageId);
       setGroupMessages(await getGroupMessages(token, selectedGroup.id));
@@ -180,7 +186,12 @@ const Dashboard = () => {
     }
   };
 
-  if (error) return <div className="text-red-500 p-4">{error}</div>;
+  if (error)
+    return (
+      <div className="text-red-500 p-4 flex items-center justify-center h-screen">
+        {error}
+      </div>
+    );
 
   return (
     <div className="grid grid-cols-3">
