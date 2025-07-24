@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import FormField from "../components/FormField";
 import { isTokenValid } from "../utils/auth";
 import ErrorWarn from "../components/fixed-components/ErrorWarn";
+import LoadingWarn from "../components/fixed-components/LoadingWarn";
 interface LoginProps {}
 
 const Login: React.FC<LoginProps> = ({}) => {
@@ -12,6 +13,7 @@ const Login: React.FC<LoginProps> = ({}) => {
 
   // UI e erros
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -28,22 +30,23 @@ const Login: React.FC<LoginProps> = ({}) => {
       return;
     }
 
-    const userData = {
-      email: userEmail,
-      password: userPassword,
-    };
+    setLoading(true);
 
     try {
       const response = await fetch("https://localhost:7103/api/v1/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(userData),
+        body: JSON.stringify({
+          email: userEmail,
+          password: userPassword,
+        }),
       });
 
       const data = await response.json();
 
       if (!response.ok) {
-        setError(data.message || "Erro no Login")
+        setError(data.message || "Erro no Login");
+        setLoading(false);
         // alert(error);
         return;
       }
@@ -54,6 +57,8 @@ const Login: React.FC<LoginProps> = ({}) => {
     } catch (err) {
       console.error("Erro ao fazer login:", err);
       alert("Erro ao fazer Login, tente novamente.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -92,8 +97,8 @@ const Login: React.FC<LoginProps> = ({}) => {
           </button>
         </form>
       </div>
-      {error && <ErrorWarn text={error} setError={setError}/>}
-      
+      {error && <ErrorWarn text={error} setError={setError} />}
+      {loading && <LoadingWarn/>}
     </div>
   );
 };

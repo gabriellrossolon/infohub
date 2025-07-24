@@ -9,6 +9,8 @@ import { getCompanies } from "../services/getCompanies";
 import { API_ROUTES } from "../api/apiRoutes";
 import ErrorWarn from "../components/fixed-components/ErrorWarn";
 import OptionsSideBar from "../components/dashboard/OptionsSideBar";
+import LoadingWarn from "../components/fixed-components/LoadingWarn";
+import SucessWarn from "../components/fixed-components/SucessWarn";
 
 interface UserCompany {
   id: number;
@@ -30,6 +32,8 @@ const Register: React.FC = () => {
 
   // UI e erros
   const [error, setError] = useState<string | null>(null);
+  const [sucess, setSucess] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const navigate = useNavigate();
 
@@ -99,6 +103,8 @@ const Register: React.FC = () => {
       return;
     }
 
+    setLoading(true);
+
     try {
       const response = await fetch(API_ROUTES.USER, {
         method: "POST",
@@ -126,20 +132,23 @@ const Register: React.FC = () => {
 
       if (!response.ok) {
         setError(data?.message || "Erro no registro");
+        setLoading(false);
         return;
       }
 
-      alert("Usuário registrado com sucesso!");
       console.log("Registrado:", data);
     } catch (err) {
       console.log("Erro ao registrar:", err);
       alert("Erro ao conectar com o servidor.");
+    } finally {
+      setSucess("Usuário cadastrado com sucesso!")
+      setLoading(false);
     }
   };
 
   return (
     <div className="h-screen bg-black/50 flex items-center justify-between">
-      <OptionsSideBar/>
+      <OptionsSideBar />
       <div className="bg-white/10 p-4 rounded-md">
         <form
           onSubmit={handleSubmitRegister}
@@ -198,16 +207,12 @@ const Register: React.FC = () => {
           >
             Registrar
           </button>
+          {error && <ErrorWarn text={error} setError={setError} />}
+          {sucess && <SucessWarn text={sucess} setSucess={setSucess}/>}
         </form>
-        {/* <div className="flex items-center justify-between">
-          <LogoutButton />
-          <ToDashboardButton />
-        </div> */}
       </div>
-      <div>
-
-      </div>
-      {error && <ErrorWarn text={error} setError={setError} />}
+      <div></div>
+      {loading && <LoadingWarn />}
     </div>
   );
 };
