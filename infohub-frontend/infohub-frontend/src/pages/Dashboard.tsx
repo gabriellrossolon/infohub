@@ -10,6 +10,7 @@ import GroupChatPanel from "../components/dashboard/GroupChatPanel";
 import { API_ROUTES } from "../api/apiRoutes";
 import { deleteMessage } from "../services/deleteMessage";
 import { deleteGroup } from "../services/deleteGroup";
+import LoadingWarn from "../components/fixed-components/LoadingWarn";
 
 const Dashboard = () => {
   // Dados do usuário e empresa
@@ -20,6 +21,10 @@ const Dashboard = () => {
   const [groups, setGroups] = useState<any[]>([]);
   const [selectedGroup, setSelectedGroup] = useState<any | null>(null);
   const [selectedGroupId, setSelectedGroupId] = useState<number | null>(null);
+  const [searchedGroup, setSearchedGroup] = useState<string>("");
+  const filteredGroups = groups.filter((group) =>
+    group.name.toLowerCase().includes(searchedGroup.toLowerCase())
+  );
   const [creatingNewGroup, setCreatingNewGroup] = useState(false);
   const [newGroupName, setNewGroupName] = useState("");
 
@@ -37,6 +42,7 @@ const Dashboard = () => {
 
   // UI e erros
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const fetchUserData = async () => {
     const token = getValidToken();
@@ -58,6 +64,16 @@ const Dashboard = () => {
 
   useEffect(() => {
     fetchUserData();
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        handleSelectGroup(null);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown); // limpeza necessária
+    };
   }, []);
 
   const handleSetCreatingGroup = () => {
@@ -70,6 +86,8 @@ const Dashboard = () => {
 
     const token = getValidToken();
     if (!token || !newGroupName) return;
+
+    setLoading(true);
 
     try {
       const userData = await getUserData(token);
@@ -86,7 +104,10 @@ const Dashboard = () => {
         }),
       });
 
-      if (!response.ok) throw new Error("Erro ao criar novo grupo.");
+      if (!response.ok) {
+        throw new Error("Erro ao criar novo grupo.");
+        setLoading(false);
+      }
 
       setNewGroupName("");
       setCreatingNewGroup(false);
@@ -94,6 +115,8 @@ const Dashboard = () => {
     } catch (err) {
       console.log("Erro ao registrar:", err);
       alert("Erro ao conectar com o servidor.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -104,6 +127,8 @@ const Dashboard = () => {
     const confirm = window.confirm("Tem certeza que deseja deletar o grupo?");
     if (!confirm) return;
 
+    setLoading(true);
+
     try {
       await deleteGroup(token, groupId);
       setGroups(await getMyGroups(token));
@@ -111,6 +136,8 @@ const Dashboard = () => {
     } catch (err) {
       console.error("Erro ao deletar o grupo: ", err);
       alert("Erro ao deletar o grupo");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -124,15 +151,18 @@ const Dashboard = () => {
       return;
     }
 
-    setSelectedGroup(group);
-    setSelectedGroupId(group.id);
-    setCreatingNewGroup(false);
+    setLoading(true);
 
     try {
       setGroupMessages(await getGroupMessages(token, group.id));
     } catch (err) {
       console.error("Erro ao carregar dados:", err);
       setError("Erro ao carregar mensagens do grupo");
+    } finally {
+      setSelectedGroup(group);
+      setSelectedGroupId(group.id);
+      setCreatingNewGroup(false);
+      setLoading(false);
     }
   };
 
@@ -142,6 +172,8 @@ const Dashboard = () => {
     const token = getValidToken();
     if (!token) return;
     if (!chatInputMessage || chatInputMessage === "") return;
+
+    setLoading(true);
 
     try {
       const userData = await getUserData(token);
@@ -159,7 +191,10 @@ const Dashboard = () => {
         }),
       });
 
-      if (!response.ok) throw new Error("Erro ao enviar mensagem");
+      if (!response.ok) {
+        throw new Error("Erro ao enviar mensagem");
+        setLoading(false);
+      }
 
       setGroupMessages(await getGroupMessages(token, selectedGroup.id));
       setChatInputMessage("");
@@ -167,6 +202,8 @@ const Dashboard = () => {
     } catch (err) {
       console.log("Erro ao registrar:", err);
       alert("Erro ao conectar com o servidor.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -174,8 +211,12 @@ const Dashboard = () => {
     const token = getValidToken();
     if (!token) return;
 
-    const confirm = window.confirm("Tem certeza que deseja deletar a mensagem?");
+    const confirm = window.confirm(
+      "Tem certeza que deseja deletar a mensagem?"
+    );
     if (!confirm) return;
+
+    setLoading(true);
 
     try {
       await deleteMessage(token, messageId);
@@ -183,6 +224,8 @@ const Dashboard = () => {
     } catch (err) {
       console.error("Erro ao deletar a mensagem", err);
       alert("Erro ao deletar a mensagem");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -196,17 +239,19 @@ const Dashboard = () => {
   return (
     <div className="grid grid-cols-3">
       {/* Seção de seleção de grupos e opções */}
-      <div className="col-span-1 h-screen bg-black/50 text-white border-r-1 border-white/20 flex">
+      <div className="col-span-1 h-screen bg-black/40 text-white border-r-1 border-white/20 flex">
         {/* Barra lateral de opções */}
-        <OptionsSideBar onClick={() => handleSelectGroup(null)} />
+        <OptionsSideBar handleSelectGroup={() => handleSelectGroup(null)} />
         {/* Seleção de grupos */}
         <GroupsList
           companyName={companyName}
           userName={userName}
-          groups={groups}
+          groups={filteredGroups}
           handleSetCreatingGroup={handleSetCreatingGroup}
           handleSelectGroup={handleSelectGroup}
           selectedGroupId={selectedGroupId}
+          searchedGroup={searchedGroup}
+          setSearchedGroup={setSearchedGroup}
         />
       </div>
 
@@ -241,6 +286,7 @@ const Dashboard = () => {
           </div>
         )}
       </div>
+      {loading && <LoadingWarn />}
     </div>
   );
 };

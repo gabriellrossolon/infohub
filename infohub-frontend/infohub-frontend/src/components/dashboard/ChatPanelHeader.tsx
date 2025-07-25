@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { CiCircleInfo, CiTrash } from "react-icons/ci";
+import { FaArchive } from "react-icons/fa";
 
 interface GroupChatPanelHeaderProps {
   selectedGroup: any;
@@ -61,10 +62,22 @@ const GroupChatPanelHeader: React.FC<GroupChatPanelHeaderProps> = ({
           </p>
         </div>
       </div>
-      <div className="min-w-16 relative" ref={menuRef}>
+      <div
+        className="min-w-16 relative flex items-center justify-center"
+        ref={menuRef}
+      >
+        <button
+          className="cursor-pointer p-3 rounded-full  text-white
+        hover:text-blue-500 hover:bg-white/10 transition-all duration-300
+        flex items-center justify-center gap-1"
+        > 
+          <span className="text-xl font-semibold">Arquivos</span>
+          <FaArchive className="text-3xl"/>
+        </button>
+
         <button
           className="cursor-pointer p-3 rounded-full text-3xl text-white
-        hover:bg-white/10 transition-colors duration-300"
+        hover:bg-white/10 transition-all duration-300"
           onClick={() => setShowGroupOptions(!showGroupOptions)}
         >
           <BsThreeDotsVertical />

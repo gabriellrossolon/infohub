@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "C:\\Users\\Sistema - Asstramed\\Desktop\\Pessoal\\Dev\\1_PROJETOS\\InfoHub\\infohub-backend\\InfoHubApplication\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{191E2E3D-9E35-48CB-943F-F4E981D4C9F6}|InfoHubApplication.csproj|c:\\users\\sistema - asstramed\\desktop\\pessoal\\dev\\1_projetos\\infohub\\infohub-backend\\infohubapplication\\controllers\\groupcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{191E2E3D-9E35-48CB-943F-F4E981D4C9F6}|InfoHubApplication.csproj|solutionrelative:controllers\\groupcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{191E2E3D-9E35-48CB-943F-F4E981D4C9F6}|InfoHubApplication.csproj|c:\\users\\sistema - asstramed\\desktop\\pessoal\\dev\\1_projetos\\infohub\\infohub-backend\\infohubapplication\\controllers\\messagecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{191E2E3D-9E35-48CB-943F-F4E981D4C9F6}|InfoHubApplication.csproj|solutionrelative:controllers\\messagecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -17,10 +21,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{191E2E3D-9E35-48CB-943F-F4E981D4C9F6}|InfoHubApplication.csproj|c:\\users\\sistema - asstramed\\desktop\\pessoal\\dev\\1_projetos\\infohub\\infohub-backend\\infohubapplication\\infrastructure\\dbconnectioncontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{191E2E3D-9E35-48CB-943F-F4E981D4C9F6}|InfoHubApplication.csproj|solutionrelative:infrastructure\\dbconnectioncontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{191E2E3D-9E35-48CB-943F-F4E981D4C9F6}|InfoHubApplication.csproj|c:\\users\\sistema - asstramed\\desktop\\pessoal\\dev\\1_projetos\\infohub\\infohub-backend\\infohubapplication\\controllers\\groupcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{191E2E3D-9E35-48CB-943F-F4E981D4C9F6}|InfoHubApplication.csproj|solutionrelative:controllers\\groupcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{191E2E3D-9E35-48CB-943F-F4E981D4C9F6}|InfoHubApplication.csproj|c:\\users\\sistema - asstramed\\desktop\\pessoal\\dev\\1_projetos\\infohub\\infohub-backend\\infohubapplication\\controllers\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -38,7 +38,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Bookmark",
@@ -46,7 +46,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "DbConnectionContext.cs",
               "DocumentMoniker": "C:\\Users\\Sistema - Asstramed\\Desktop\\Pessoal\\Dev\\1_PROJETOS\\InfoHub\\infohub-backend\\InfoHubApplication\\Infrastructure\\DbConnectionContext.cs",
               "RelativeDocumentMoniker": "Infrastructure\\DbConnectionContext.cs",
@@ -58,7 +58,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Message.cs",
               "DocumentMoniker": "C:\\Users\\Sistema - Asstramed\\Desktop\\Pessoal\\Dev\\1_PROJETOS\\InfoHub\\infohub-backend\\InfoHubApplication\\Models\\Message.cs",
               "RelativeDocumentMoniker": "Models\\Message.cs",
@@ -70,7 +70,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "Group.cs",
               "DocumentMoniker": "C:\\Users\\Sistema - Asstramed\\Desktop\\Pessoal\\Dev\\1_PROJETOS\\InfoHub\\infohub-backend\\InfoHubApplication\\Models\\Group.cs",
               "RelativeDocumentMoniker": "Models\\Group.cs",
@@ -106,19 +106,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 0,
               "Title": "GroupController.cs",
               "DocumentMoniker": "C:\\Users\\Sistema - Asstramed\\Desktop\\Pessoal\\Dev\\1_PROJETOS\\InfoHub\\infohub-backend\\InfoHubApplication\\Controllers\\GroupController.cs",
               "RelativeDocumentMoniker": "Controllers\\GroupController.cs",
               "ToolTip": "C:\\Users\\Sistema - Asstramed\\Desktop\\Pessoal\\Dev\\1_PROJETOS\\InfoHub\\infohub-backend\\InfoHubApplication\\Controllers\\GroupController.cs",
               "RelativeToolTip": "Controllers\\GroupController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAATAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-16T19:49:15.651Z"
+              "WhenOpened": "2025-07-16T19:49:15.651Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "MessageController.cs",
               "DocumentMoniker": "C:\\Users\\Sistema - Asstramed\\Desktop\\Pessoal\\Dev\\1_PROJETOS\\InfoHub\\infohub-backend\\InfoHubApplication\\Controllers\\MessageController.cs",
               "RelativeDocumentMoniker": "Controllers\\MessageController.cs",
@@ -126,8 +127,7 @@
               "RelativeToolTip": "Controllers\\MessageController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAzAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-16T19:48:14.974Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T19:48:14.974Z"
             }
           ]
         }

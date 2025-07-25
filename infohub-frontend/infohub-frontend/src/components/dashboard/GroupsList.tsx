@@ -1,4 +1,5 @@
 import { BiMessageAdd } from "react-icons/bi";
+import { IoMdSearch } from "react-icons/io";
 
 interface GroupsListProps {
   companyName: string;
@@ -7,6 +8,8 @@ interface GroupsListProps {
   handleSetCreatingGroup: () => void;
   handleSelectGroup: (group: any) => void;
   selectedGroupId: number | null;
+  searchedGroup: string;
+  setSearchedGroup: (value: string) => void;
 }
 
 const GroupsList: React.FC<GroupsListProps> = ({
@@ -16,11 +19,12 @@ const GroupsList: React.FC<GroupsListProps> = ({
   handleSelectGroup,
   handleSetCreatingGroup,
   selectedGroupId,
+  searchedGroup,
+  setSearchedGroup,
 }) => {
   return (
     <div className="flex flex-col items-start w-full backdrop-blur">
       <div className="flex flex-col items-center justify-center border-b border-white/20 p-1 w-full relative">
-        {/* <h1 className="text-3xl font-bold">{companyName.toUpperCase()}</h1> */}
         <h1 className="text-3xl font-bold text-gray-100">
           Info<strong className="text-blue-500">HUB</strong>
         </h1>
@@ -35,15 +39,33 @@ const GroupsList: React.FC<GroupsListProps> = ({
         >
           <BiMessageAdd className="text-5xl" />
         </button>
+        <div className="relative w-full max-w-md">
+          <IoMdSearch
+            className="absolute left-4 top-1/2 transform -translate-y-1/2 text-2xl 
+          text-gray-500 pointer-events-none"
+          />
+          <input
+            value={searchedGroup}
+            onChange={(e) => setSearchedGroup(e.target.value)}
+            type="text"
+            placeholder="Pesquisar por grupo"
+            className="w-full rounded-full py-2 pl-12 pr-4 bg-white/5 text-white focus:outline-none"
+          />
+        </div>
       </div>
       <div className="w-full flex-1 overflow-y-auto no-scrollbar">
+        {groups.length === 0 && (
+          <p className="text-gray-400 text-center mt-4">
+            Nenhum grupo encontrado
+          </p>
+        )}
         {groups.map((group) => {
           const isSelected = group.id === selectedGroupId;
           return (
             <div
               key={group.id}
               className={`flex items-center justify-start gap-2 p-1 m-1 rounded-xl cursor-pointer 
-              hover:bg-white/10 w=full ${isSelected ? "bg-white/20" : ""}`}
+              hover:bg-white/10 w-full ${isSelected ? "bg-white/20" : ""}`}
               onClick={() => handleSelectGroup(group)}
             >
               <img src="user.png" alt="Foto do Grupo" className="max-h-16" />

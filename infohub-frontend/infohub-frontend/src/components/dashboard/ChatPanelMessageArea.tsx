@@ -86,7 +86,7 @@ const GroupChatPanelMessageArea: React.FC<GroupChatPanelMessageAreaProps> = ({
           .map((groupMessage) => (
             <div key={groupMessage.id} className="flex px-1 group">
               <div
-                className="rounded-l-md flex items-center"
+                className="rounded-l-md flex items-center backdrop-blur"
                 style={{
                   backgroundColor:
                     getCategoryColor(groupMessage.messageCategory) + "99",

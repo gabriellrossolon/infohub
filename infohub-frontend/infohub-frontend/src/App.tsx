@@ -10,7 +10,7 @@ function App() {
     <div className="relative h-screen bg-black">
       <div
         className="absolute inset-0 bg-cover bg-no-repeat"
-        style={{ backgroundImage: "url('/white-bg.png')", opacity: 0.1 }}
+        style={{ backgroundImage: "url('/chat-bg2.jpg')", opacity: 0.05 }}
       ></div>
       <div className="relative z-10">
         <BrowserRouter>
