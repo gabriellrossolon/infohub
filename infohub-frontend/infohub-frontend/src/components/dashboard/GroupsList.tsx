@@ -23,7 +23,7 @@ const GroupsList: React.FC<GroupsListProps> = ({
   setSearchedGroup,
 }) => {
   return (
-    <div className="flex flex-col items-start w-full backdrop-blur">
+    <div className="flex flex-col items-start w-full backdrop-blur select-none">
       <div className="flex flex-col items-center justify-center border-b border-white/20 p-1 w-full relative">
         <h1 className="text-3xl font-bold text-gray-100">
           Info<strong className="text-blue-500">HUB</strong>
@@ -53,7 +53,7 @@ const GroupsList: React.FC<GroupsListProps> = ({
           />
         </div>
       </div>
-      <div className="w-full flex-1 overflow-y-auto no-scrollbar">
+      <div className="w-full flex-1 overflow-y-auto no-scrollbar p-1 space-y-1">
         {groups.length === 0 && (
           <p className="text-gray-400 text-center mt-4">
             Nenhum grupo encontrado
@@ -64,7 +64,7 @@ const GroupsList: React.FC<GroupsListProps> = ({
           return (
             <div
               key={group.id}
-              className={`flex items-center justify-start gap-2 p-1 m-1 rounded-xl cursor-pointer 
+              className={`flex items-center justify-start gap-2 rounded-xl p-1 cursor-pointer 
               hover:bg-white/10 w-full ${isSelected ? "bg-white/20" : ""}`}
               onClick={() => handleSelectGroup(group)}
             >

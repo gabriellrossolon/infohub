@@ -11,6 +11,8 @@ import { API_ROUTES } from "../api/apiRoutes";
 import { deleteMessage } from "../services/deleteMessage";
 import { deleteGroup } from "../services/deleteGroup";
 import LoadingWarn from "../components/fixed-components/LoadingWarn";
+import { getGroupFiles } from "../services/getGroupFiles";
+import { getGroupFileByName } from "../services/GetGroupFileByName";
 
 const Dashboard = () => {
   // Dados do usuário e empresa
@@ -25,8 +27,8 @@ const Dashboard = () => {
   const filteredGroups = groups.filter((group) =>
     group.name.toLowerCase().includes(searchedGroup.toLowerCase())
   );
-  const [creatingNewGroup, setCreatingNewGroup] = useState(false);
-  const [newGroupName, setNewGroupName] = useState("");
+  const [creatingNewGroup, setCreatingNewGroup] = useState<boolean>(false);
+  const [newGroupName, setNewGroupName] = useState<string>("");
 
   // Mensagens do grupo
   const [groupMessages, setGroupMessages] = useState<any[]>([]);
@@ -37,8 +39,13 @@ const Dashboard = () => {
     "Reclamação",
     "Solicitação",
   ]);
-  const [selectedMessageCategory, setSelectedMessageCategory] = useState("");
-  const [chatInputMessage, setChatInputMessage] = useState("");
+  const [selectedMessageCategory, setSelectedMessageCategory] =
+    useState<string>("");
+  const [chatInputMessage, setChatInputMessage] = useState<string>("");
+
+  //Arquivos do grupo
+  const [groupFiles, setGroupFiles] = useState<any>();
+  const [showGroupFiles, setShowGroupFiles] = useState<boolean>(false);
 
   // UI e erros
   const [error, setError] = useState<string | null>(null);
@@ -78,6 +85,7 @@ const Dashboard = () => {
 
   const handleSetCreatingGroup = () => {
     handleSelectGroup(null);
+    setShowGroupFiles(false);
     setCreatingNewGroup(!creatingNewGroup);
   };
 
@@ -148,6 +156,7 @@ const Dashboard = () => {
     if (!group) {
       setSelectedGroup(null);
       setSelectedGroupId(null);
+      setGroupFiles(null);
       return;
     }
 
@@ -155,10 +164,12 @@ const Dashboard = () => {
 
     try {
       setGroupMessages(await getGroupMessages(token, group.id));
+      setGroupFiles(await getGroupFiles(token, group.id));
     } catch (err) {
       console.error("Erro ao carregar dados:", err);
-      setError("Erro ao carregar mensagens do grupo");
+      setError("Erro ao carregar mensagens ou arquivos do grupo");
     } finally {
+      setShowGroupFiles(false);
       setSelectedGroup(group);
       setSelectedGroupId(group.id);
       setCreatingNewGroup(false);
@@ -229,6 +240,69 @@ const Dashboard = () => {
     }
   };
 
+  const handleDownloadFile = async (fileName: string) => {
+    const token = getValidToken();
+    if (!token || !selectedGroupId) return;
+
+    setLoading(true);
+
+    try {
+      const blob = await getGroupFileByName(token, selectedGroupId, fileName);
+      const downloadUrl = window.URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+      link.href = downloadUrl;
+      link.download = fileName;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+
+      window.URL.revokeObjectURL(downloadUrl);
+    } catch (error) {
+      alert("Erro ao baixar arquivo");
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleUploadFile = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const token = getValidToken();
+    if (!token || !selectedGroupId) return;
+
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    setLoading(true);
+
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const response = await fetch(
+        `${API_ROUTES.GROUP_FILES(selectedGroupId)}`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: formData,
+        }
+      );
+
+      setGroupFiles(await getGroupFiles(token, selectedGroupId));
+
+      if (!response.ok) {
+        throw new Error("Erro ao fazer upload");
+      }
+    } catch (error) {
+      setError("Falha no upload");
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   if (error)
     return (
       <div className="text-red-500 p-4 flex items-center justify-center h-screen">
@@ -267,6 +341,11 @@ const Dashboard = () => {
           <GroupChatPanel
             selectedGroup={selectedGroup}
             groupMessages={groupMessages}
+            groupFiles={groupFiles}
+            handleDowloadFile={handleDownloadFile}
+            handleUploadFile={handleUploadFile}
+            setShowGroupFiles={setShowGroupFiles}
+            showGroupFiles={showGroupFiles}
             handleDeleteGroup={handleDeleteGroup}
             handleSendMessage={handleSendMessage}
             handleDeleteMessage={handleDeleteMessage}

@@ -13,4 +13,6 @@ export const API_ROUTES = {
   MESSAGE_BY_ID: (messageId: number) => `${BASE_URL}/message/${messageId}`,
   USER_BY_ID: (userId: string | number) => `${BASE_URL}/user/${userId}`,
   GROUP_MESSAGES: (groupId: string | number) => `${BASE_URL}/message/group/${groupId}`,
+  GROUP_FILES: (groupId: string | number) => `${BASE_URL}/files/${groupId}`,
+  GROUP_FILE_BY_NAME: (groupId: string | number, fileName: string) => `${BASE_URL}/files/${groupId}/${fileName}`,
 }

@@ -7,12 +7,16 @@ interface GroupChatPanelHeaderProps {
   selectedGroup: any;
   handleDeleteGroup: (groupId: number) => void;
   userRole: string | null;
+  showGroupFiles: boolean;
+  setShowGroupFiles: (value: boolean) => void;
 }
 
 const GroupChatPanelHeader: React.FC<GroupChatPanelHeaderProps> = ({
   selectedGroup,
   handleDeleteGroup,
   userRole,
+  showGroupFiles,
+  setShowGroupFiles,
 }) => {
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -70,6 +74,7 @@ const GroupChatPanelHeader: React.FC<GroupChatPanelHeaderProps> = ({
           className="cursor-pointer p-3 rounded-full  text-white
         hover:text-blue-500 hover:bg-white/10 transition-all duration-300
         flex items-center justify-center gap-1"
+        onClick={() => setShowGroupFiles(!showGroupFiles)}
         > 
           <span className="text-xl font-semibold">Arquivos</span>
           <FaArchive className="text-3xl"/>

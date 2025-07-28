@@ -58,6 +58,64 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "InfoHubApplication.Controllers.FileController",
+    "Method": "UploadFile",
+    "RelativePath": "api/v1/files/{groupId}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "groupId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "file",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "InfoHubApplication.Controllers.FileController",
+    "Method": "GetFilesByGroup",
+    "RelativePath": "api/v1/files/{groupId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "groupId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "InfoHubApplication.Controllers.FileController",
+    "Method": "DownloadFile",
+    "RelativePath": "api/v1/files/{groupId}/{fileName}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "groupId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "fileName",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "InfoHubApplication.Controllers.GroupController",
     "Method": "Add",
     "RelativePath": "api/v1/group",
