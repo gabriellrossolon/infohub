@@ -58,7 +58,7 @@ const GroupChatPanelHeader: React.FC<GroupChatPanelHeaderProps> = ({
   return (
     <div className=" bg-[#111111] rounded-full flex items-center justify-between">
       <div className="p-1 flex items-center justify-start gap-2">
-        <img src="user.png" alt="Group Image" className="max-w-16" />
+        <img src="enterpriseicon.png" alt="Group Image" className="max-w-16" />
         <div className="flex flex-col">
           <h2 className="text-xl font-bold text-white">{selectedGroup.name}</h2>
           <p className="text-gray-400 cursor-pointer">

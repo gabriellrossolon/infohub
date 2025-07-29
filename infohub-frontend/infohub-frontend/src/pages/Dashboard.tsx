@@ -12,7 +12,8 @@ import { deleteMessage } from "../services/deleteMessage";
 import { deleteGroup } from "../services/deleteGroup";
 import LoadingWarn from "../components/fixed-components/LoadingWarn";
 import { getGroupFiles } from "../services/getGroupFiles";
-import { getGroupFileByName } from "../services/GetGroupFileByName";
+import { getGroupFileByName } from "../services/getGroupFileByName";
+import { deleteGroupFile } from "../services/deleteGroupFile";
 
 const Dashboard = () => {
   // Dados do usuário e empresa
@@ -303,6 +304,28 @@ const Dashboard = () => {
     }
   };
 
+  const handleDeleteFile = async (fileName: string) => {
+    const token = getValidToken();
+    if (!token || !selectedGroupId) return;
+
+   const confirm = window.confirm(
+      "Tem certeza que deseja deletar o arquivo?"
+    );
+    if (!confirm) return;
+
+    setLoading(true);
+
+    try {
+      await deleteGroupFile(token, selectedGroupId, fileName);
+      setGroupFiles(await getGroupFiles(token, selectedGroupId));
+    } catch (error) {
+      setError("Erro ao deletar arquivo");
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   if (error)
     return (
       <div className="text-red-500 p-4 flex items-center justify-center h-screen">
@@ -344,6 +367,7 @@ const Dashboard = () => {
             groupFiles={groupFiles}
             handleDowloadFile={handleDownloadFile}
             handleUploadFile={handleUploadFile}
+            handleDeleteFile={handleDeleteFile}
             setShowGroupFiles={setShowGroupFiles}
             showGroupFiles={showGroupFiles}
             handleDeleteGroup={handleDeleteGroup}

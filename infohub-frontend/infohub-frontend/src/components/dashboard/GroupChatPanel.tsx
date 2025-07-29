@@ -11,6 +11,7 @@ interface GroupChatPanelProps {
   showGroupFiles: boolean;
   handleDowloadFile: (fileName: string) => void;
   handleUploadFile: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleDeleteFile: (fileName: string) => void;
   setShowGroupFiles: (value: boolean) => void;
   handleDeleteGroup: (groupId: number) => void;
   handleSendMessage: (e: React.FormEvent<HTMLFormElement>) => void;
@@ -31,6 +32,7 @@ const GroupChatPanel: React.FC<GroupChatPanelProps> = ({
   showGroupFiles,
   handleDowloadFile,
   handleUploadFile,
+  handleDeleteFile,
   setShowGroupFiles,
   handleDeleteGroup,
   handleSendMessage,
@@ -60,6 +62,7 @@ const GroupChatPanel: React.FC<GroupChatPanelProps> = ({
           groupFiles={groupFiles}
           handleDowloadFile={handleDowloadFile}
           handleUploadFile={handleUploadFile}
+          handleDeleteFile={handleDeleteFile}
         />
       ) : (
         <div className="flex flex-col h-full">

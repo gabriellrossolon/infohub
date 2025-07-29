@@ -67,5 +67,30 @@ namespace InfoHubApplication.Controllers
 
             return PhysicalFile(filePath, contentType, fileName);
         }
+
+
+        [Authorize]
+        [HttpDelete("{groupId:int}/{fileName}")]
+        public IActionResult DeleteFile(int groupId, string fileName)
+        {
+            if (string.IsNullOrWhiteSpace(fileName))
+                return BadRequest("Nome do arquivo inválido.");
+
+            var uploadsPath = Path.Combine(Directory.GetCurrentDirectory(), "Uploads", groupId.ToString());
+            var filePath = Path.Combine(uploadsPath, fileName);
+
+            if (!System.IO.File.Exists(filePath))
+                return NotFound("Arquivo não encontrado.");
+
+            try
+            {
+                System.IO.File.Delete(filePath);
+                return Ok(new { message = "Arquivo deletado com sucesso." });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Erro ao deletar o arquivo.", error = ex.Message });
+            }
+        }
     }
 }

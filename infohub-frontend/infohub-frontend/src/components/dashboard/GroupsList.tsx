@@ -68,7 +68,7 @@ const GroupsList: React.FC<GroupsListProps> = ({
               hover:bg-white/10 w-full ${isSelected ? "bg-white/20" : ""}`}
               onClick={() => handleSelectGroup(group)}
             >
-              <img src="user.png" alt="Foto do Grupo" className="max-h-16" />
+              <img src="enterpriseicon.png" alt="Foto do Grupo" className="max-h-16" />
               <div className="flex flex-col">
                 <h3 className="font-semibold">{group.name}</h3>
                 <p className="text-gray-300">Implementar last message...</p>
