@@ -11,11 +11,16 @@ namespace InfoHubApplication.Controllers
     public class MessageController : ControllerBase
     {
         private readonly IRepository<Message> _messageRepository;
+        private readonly IGroupRepository _groupRepository;
 
-        public MessageController(IRepository<Message> messageRepository)
+        public MessageController(
+            IRepository<Message> messageRepository,
+            IGroupRepository groupRepository)
         {
             _messageRepository = messageRepository;
+            _groupRepository = groupRepository;
         }
+
         [Authorize]
         [HttpPost]
         public IActionResult Add([FromBody] MessageViewModel messageViewModel)
@@ -28,6 +33,13 @@ namespace InfoHubApplication.Controllers
             var message = new Message(messageViewModel.GroupId, messageViewModel.UserId, messageViewModel.MessageCategory, messageViewModel.MessageContent);
 
             _messageRepository.Add(message);
+
+            var group = _groupRepository.FindById(message.GroupId);
+            if (group != null)
+            {
+                group.LastMessageTimestamp = message.SendTime;
+                _groupRepository.Update(group);
+            }
 
             return Ok();
         }

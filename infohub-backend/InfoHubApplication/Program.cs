@@ -53,9 +53,9 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddTransient<IRepository<Message>, MessageRepository>();
-builder.Services.AddTransient<IRepository<Group>, GroupRepository>();
-builder.Services.AddTransient<IRepository<Company>, CompanyRepository>();
+builder.Services.AddScoped<IRepository<Message>, MessageRepository>();
+builder.Services.AddScoped<IGroupRepository, GroupRepository>();
+builder.Services.AddScoped<IRepository<Company>, CompanyRepository>();
 
 var key = Encoding.ASCII.GetBytes(InfoHubApplication.Key.Secret);
 builder.Services.AddAuthentication(x =>

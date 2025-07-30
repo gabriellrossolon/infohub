@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { CiCircleInfo, CiTrash } from "react-icons/ci";
 import { FaArchive } from "react-icons/fa";
-import { formatCpfOrCnpj } from "../../utils/formatters";
+import { formatCpfOrCnpj, parseUtcString } from "../../utils/formatters";
 
 interface GroupChatPanelHeaderProps {
   selectedGroup: any;
@@ -25,21 +25,36 @@ const GroupChatPanelHeader: React.FC<GroupChatPanelHeaderProps> = ({
 
   const handleShowGroupInfo = (selectedGroup: any) => {
     setShowGroupOptions(false);
+    const lastMsgTime = parseUtcString(selectedGroup.lastMessageTimestamp);
+    const createdTime = parseUtcString(selectedGroup.creationDate);
+
     alert(
       "O ID do grupo é: " +
         selectedGroup.id +
         "\nO tipo de Grupo é: " +
         selectedGroup.identifierType +
-        "\nO numero de identificação é: " +
+        "\nO número de identificação é: " +
         selectedGroup.identifierValue +
+        "\nÚltima mensagem enviada foi em: " +
+        (lastMsgTime
+          ? lastMsgTime.toLocaleString("pt-BR", {
+              day: "2-digit",
+              month: "2-digit",
+              year: "numeric",
+              hour: "2-digit",
+              minute: "2-digit",
+            })
+          : "Nenhuma mensagem enviada") +
         "\nGrupo criado em: " +
-        new Date(selectedGroup.creationDate).toLocaleString("pt-BR", {
-          day: "2-digit",
-          month: "2-digit",
-          year: "numeric",
-          hour: "2-digit",
-          minute: "2-digit",
-        })
+        (createdTime
+          ? createdTime.toLocaleString("pt-BR", {
+              day: "2-digit",
+              month: "2-digit",
+              year: "numeric",
+              hour: "2-digit",
+              minute: "2-digit",
+            })
+          : "Data de criação não disponível")
     );
   };
 
@@ -63,13 +78,24 @@ const GroupChatPanelHeader: React.FC<GroupChatPanelHeaderProps> = ({
   return (
     <div className=" bg-[#111111] rounded-full flex items-center justify-between">
       <div className="p-1 flex items-center justify-start gap-2">
-        <img src="enterpriseicon.png" alt="Group Image" className="max-w-16" />
+        <img
+          src={`${
+            selectedGroup.identifierType === "CPF"
+              ? "usericon.png"
+              : selectedGroup.identifierType === "CNPJ" && "enterpriseicon.png"
+          }`}
+          alt="Group Image"
+          className="max-w-16"
+        />
         <div className="flex flex-col items-start justify-center">
           <h2 className="text-xl font-bold text-white">
             {selectedGroup.name} -{" "}
             {formatCpfOrCnpj(selectedGroup.identifierValue)}
           </h2>
-          <button className="cursor-pointer" onClick={() => handleShowGroupInfo(selectedGroup)}>
+          <button
+            className="cursor-pointer"
+            onClick={() => handleShowGroupInfo(selectedGroup)}
+          >
             <p className="text-gray-400">clique para mostrar dados do grupo</p>
           </button>
         </div>

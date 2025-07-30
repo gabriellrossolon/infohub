@@ -2,7 +2,7 @@
 
 namespace InfoHubApplication.Infrastructure
 {
-    public class GroupRepository : IRepository<Group>
+    public class GroupRepository : IGroupRepository
     {
         private readonly DbConnectionContext _context = new DbConnectionContext();
 
@@ -26,6 +26,12 @@ namespace InfoHubApplication.Infrastructure
         public Group FindById(int id)
         {
             return _context.Set<Group>().Find(id);
+        }
+
+        public void Update(Group group)
+        {
+            _context.Groups.Update(group);
+            _context.SaveChanges();
         }
     }
 }

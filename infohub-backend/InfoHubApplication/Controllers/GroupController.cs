@@ -1,5 +1,4 @@
-﻿using InfoHubApplication.Infrastructure;
-using InfoHubApplication.Models;
+﻿using InfoHubApplication.Models;
 using InfoHubApplication.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,9 +9,9 @@ namespace InfoHubApplication.Controllers
     [Route("api/v1/group")]
     public class GroupController : ControllerBase
     {
-        private readonly IRepository<Group> _groupRepository;
+        private readonly IGroupRepository _groupRepository;
 
-        public GroupController(IRepository<Group> groupRepository)
+        public GroupController(IGroupRepository groupRepository)
         {
             _groupRepository = groupRepository;
         }

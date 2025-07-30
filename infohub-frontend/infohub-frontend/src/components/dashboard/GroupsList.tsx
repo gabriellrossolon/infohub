@@ -1,5 +1,6 @@
 import { BiMessageAdd } from "react-icons/bi";
 import { IoMdSearch } from "react-icons/io";
+import { formatCpfOrCnpj } from "../../utils/formatters";
 
 interface GroupsListProps {
   companyName: string;
@@ -22,6 +23,15 @@ const GroupsList: React.FC<GroupsListProps> = ({
   searchedGroup,
   setSearchedGroup,
 }) => {
+  const sortedGroups = [...groups].sort((a, b) => {
+    if (!a.lastMessageTimestamp) return 1; // coloca grupos sem última mensagem no final
+    if (!b.lastMessageTimestamp) return -1;
+    return (
+      new Date(b.lastMessageTimestamp).getTime() -
+      new Date(a.lastMessageTimestamp).getTime()
+    );
+  });
+
   return (
     <div className="flex flex-col items-start w-full backdrop-blur select-none">
       <div className="flex flex-col items-center justify-center border-b border-white/20 p-1 w-full relative">
@@ -59,7 +69,7 @@ const GroupsList: React.FC<GroupsListProps> = ({
             Nenhum grupo encontrado
           </p>
         )}
-        {groups.map((group) => {
+        {sortedGroups.map((group) => {
           const isSelected = group.id === selectedGroupId;
           return (
             <div
@@ -68,10 +78,20 @@ const GroupsList: React.FC<GroupsListProps> = ({
               hover:bg-white/10 w-full ${isSelected ? "bg-white/20" : ""}`}
               onClick={() => handleSelectGroup(group)}
             >
-              <img src="enterpriseicon.png" alt="Foto do Grupo" className="max-h-16" />
+              <img
+                src={`${
+                  group.identifierType === "CPF"
+                    ? "usericon.png"
+                    : group.identifierType === "CNPJ" && "enterpriseicon.png"
+                }`}
+                alt="Foto do Grupo"
+                className="max-h-16"
+              />
               <div className="flex flex-col">
                 <h3 className="font-semibold">{group.name}</h3>
-                <p className="text-gray-300">Implementar last message...</p>
+                <p className="text-gray-300">
+                  {formatCpfOrCnpj(group.identifierValue)}
+                </p>
               </div>
             </div>
           );

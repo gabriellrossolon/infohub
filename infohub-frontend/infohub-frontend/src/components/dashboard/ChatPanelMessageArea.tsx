@@ -3,6 +3,7 @@ import { CiCircleInfo, CiTrash } from "react-icons/ci";
 import { useEffect, useRef } from "react";
 import { getUserDataById } from "../../services/getUserDataById";
 import { getValidToken } from "../../utils/auth";
+import { parseUtcString } from "../../utils/formatters";
 
 interface GroupChatPanelMessageAreaProps {
   groupMessages: any[];
@@ -50,7 +51,7 @@ const GroupChatPanelMessageArea: React.FC<GroupChatPanelMessageAreaProps> = ({
         "\nEnviada por: " +
         userData.name.toUpperCase() +
         "\nMensagem enviada em: " +
-        new Date(groupMessage.sendTime).toLocaleString("pt-BR", {
+        parseUtcString(groupMessage.sendTime).toLocaleString("pt-BR", {
           day: "2-digit",
           month: "2-digit",
           year: "numeric",

@@ -13,6 +13,8 @@ namespace InfoHubApplication.Models
         public string IdentifierType { get; private set; }
         public string IdentifierValue { get; private set; }
         public DateTime CreationDate { get; private set; }
+        public DateTime? LastMessageTimestamp { get; set; } 
+
 
         public Group(string name, int companyId, string identifierType, string identifierValue)
         {

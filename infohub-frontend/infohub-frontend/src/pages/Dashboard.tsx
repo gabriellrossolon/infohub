@@ -25,13 +25,23 @@ const Dashboard = () => {
   const [selectedGroup, setSelectedGroup] = useState<any | null>(null);
   const [selectedGroupId, setSelectedGroupId] = useState<number | null>(null);
   const [searchedGroup, setSearchedGroup] = useState<string>("");
-  const filteredGroups = groups.filter((group) =>
-    group.name.toLowerCase().includes(searchedGroup.toLowerCase())
-  );
+  const normalize = (str: string) => str.replace(/\D/g, "").toLowerCase();
+  const filteredGroups = groups.filter((group) => {
+    const normalizedSearch = searchedGroup.toLowerCase();
+    const normalizedIdentifier = normalize(group.identifierValue || "");
+    const normalizedName = (group.name || "").toLowerCase();
+
+    return (
+      normalizedName.includes(normalizedSearch) ||
+      normalizedIdentifier.includes(normalize(searchedGroup))
+    );
+  });
   const [creatingNewGroup, setCreatingNewGroup] = useState<boolean>(false);
   const [newGroupName, setNewGroupName] = useState<string>("");
-  const [newGroupIdentifierType, setNewGroupIdentifierType] = useState<string>("")
-  const [newGroupIdentifierValue, setNewGroupIdentifierValue] = useState<string>("")
+  const [newGroupIdentifierType, setNewGroupIdentifierType] =
+    useState<string>("");
+  const [newGroupIdentifierValue, setNewGroupIdentifierValue] =
+    useState<string>("");
 
   // Mensagens do grupo
   const [groupMessages, setGroupMessages] = useState<any[]>([]);
@@ -90,8 +100,8 @@ const Dashboard = () => {
     handleSelectGroup(null);
     setShowGroupFiles(false);
     setNewGroupName("");
-    setNewGroupIdentifierType("")
-    setNewGroupIdentifierValue("")
+    setNewGroupIdentifierType("");
+    setNewGroupIdentifierValue("");
     setCreatingNewGroup(!creatingNewGroup);
   };
 
@@ -222,6 +232,7 @@ const Dashboard = () => {
       console.log("Erro ao registrar:", err);
       alert("Erro ao conectar com o servidor.");
     } finally {
+      setGroups(await getMyGroups(token));
       setLoading(false);
     }
   };
@@ -274,7 +285,9 @@ const Dashboard = () => {
     }
   };
 
-  const handleUploadFile = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleUploadFile = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const token = getValidToken();
     if (!token || !selectedGroupId) return;
 
@@ -315,9 +328,7 @@ const Dashboard = () => {
     const token = getValidToken();
     if (!token || !selectedGroupId) return;
 
-   const confirm = window.confirm(
-      "Tem certeza que deseja deletar o arquivo?"
-    );
+    const confirm = window.confirm("Tem certeza que deseja deletar o arquivo?");
     if (!confirm) return;
 
     setLoading(true);
