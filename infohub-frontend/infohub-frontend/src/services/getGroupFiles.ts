@@ -8,7 +8,7 @@ export async function getGroupFiles(token: string, groupId: number) {
   });
 
   if (response.status === 404) {
-    // Retorna array vazio se não tem arquivos
+    console.log("Esse grupo não tem arquivos registrados.")
     return [];
   }
 

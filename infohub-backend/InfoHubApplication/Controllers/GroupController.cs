@@ -26,8 +26,14 @@ namespace InfoHubApplication.Controllers
                 return BadRequest("Group data is null");
             }
 
-            // Aqui assumindo que o Group tem CompanyId (e não EnterpriseId)
-            var group = new Group(groupViewModel.Name, groupViewModel.CompanyId);
+            var cleanedIdentifier = System.Text.RegularExpressions.Regex.Replace(groupViewModel.IdentifierValue ?? "", @"\D", "");
+
+            var group = new Group(
+                groupViewModel.Name,
+                groupViewModel.CompanyId,
+                groupViewModel.IdentifierType,
+                cleanedIdentifier
+            );
 
             _groupRepository.Add(group);
 
@@ -82,7 +88,7 @@ namespace InfoHubApplication.Controllers
             var group = _groupRepository.FindById(id);
             if (group == null)
             {
-                return NotFound(new { message = "Grupo não encontrada." });
+                return NotFound(new { message = "Grupo não encontrado." });
             }
             return Ok(group);
         }

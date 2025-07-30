@@ -14,12 +14,12 @@ const SelectFormField: React.FC<SelectFormFieldProps> = ({
   options,
 }) => {
   return (
-    <label className="flex flex-col items-start">
+    <label className="flex flex-col items-start w-full">
       <span className="text-gray-300">{name}</span>
       <select
         value={value}
         onChange={onChange}
-        className="text-white/80 py-1 px-2 border-1 rounded-md border-white/50 w-full"
+        className="text-white/80 py-1 px-2 border-1 rounded-md border-white/50 w-full bg-black/30"
         required
       >
         <option disabled value="">

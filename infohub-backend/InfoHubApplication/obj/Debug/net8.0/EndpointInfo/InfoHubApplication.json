@@ -183,6 +183,35 @@
             "description": "OK"
           }
         }
+      },
+      "delete": {
+        "tags": [
+          "File"
+        ],
+        "parameters": [
+          {
+            "name": "groupId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "fileName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
       }
     },
     "/api/v1/group": {
@@ -504,6 +533,8 @@
       "GroupViewModel": {
         "required": [
           "companyId",
+          "identifierType",
+          "identifierValue",
           "name"
         ],
         "type": "object",
@@ -515,6 +546,14 @@
           "companyId": {
             "type": "integer",
             "format": "int32"
+          },
+          "identifierType": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "identifierValue": {
+            "minLength": 1,
+            "type": "string"
           }
         },
         "additionalProperties": false

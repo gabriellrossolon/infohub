@@ -30,6 +30,8 @@ const Dashboard = () => {
   );
   const [creatingNewGroup, setCreatingNewGroup] = useState<boolean>(false);
   const [newGroupName, setNewGroupName] = useState<string>("");
+  const [newGroupIdentifierType, setNewGroupIdentifierType] = useState<string>("")
+  const [newGroupIdentifierValue, setNewGroupIdentifierValue] = useState<string>("")
 
   // Mensagens do grupo
   const [groupMessages, setGroupMessages] = useState<any[]>([]);
@@ -87,6 +89,9 @@ const Dashboard = () => {
   const handleSetCreatingGroup = () => {
     handleSelectGroup(null);
     setShowGroupFiles(false);
+    setNewGroupName("");
+    setNewGroupIdentifierType("")
+    setNewGroupIdentifierValue("")
     setCreatingNewGroup(!creatingNewGroup);
   };
 
@@ -110,6 +115,8 @@ const Dashboard = () => {
         body: JSON.stringify({
           name: newGroupName,
           companyId: userData.companyId,
+          identifierType: newGroupIdentifierType,
+          identifierValue: newGroupIdentifierValue,
         }),
       });
 
@@ -356,9 +363,13 @@ const Dashboard = () => {
       <div className="col-span-2 h-screen flex flex-col">
         {creatingNewGroup && !selectedGroup ? (
           <CreateGroup
-            onChange={(e) => setNewGroupName(e.target.value)}
+            setNewGroupName={(e) => setNewGroupName(e.target.value)}
             newGroupName={newGroupName}
-            onSubmit={(e) => handleCreateNewGroup(e)}
+            handleCreateNewGroup={(e) => handleCreateNewGroup(e)}
+            newGroupIdentifierValue={newGroupIdentifierValue}
+            setNewGroupIdentifierValue={setNewGroupIdentifierValue}
+            newGroupIdentifierType={newGroupIdentifierType}
+            setNewGroupIdentifierType={setNewGroupIdentifierType}
           />
         ) : selectedGroup ? (
           <GroupChatPanel

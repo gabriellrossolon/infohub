@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { CiCircleInfo, CiTrash } from "react-icons/ci";
 import { FaArchive } from "react-icons/fa";
+import { formatCpfOrCnpj } from "../../utils/formatters";
 
 interface GroupChatPanelHeaderProps {
   selectedGroup: any;
@@ -27,6 +28,10 @@ const GroupChatPanelHeader: React.FC<GroupChatPanelHeaderProps> = ({
     alert(
       "O ID do grupo é: " +
         selectedGroup.id +
+        "\nO tipo de Grupo é: " +
+        selectedGroup.identifierType +
+        "\nO numero de identificação é: " +
+        selectedGroup.identifierValue +
         "\nGrupo criado em: " +
         new Date(selectedGroup.creationDate).toLocaleString("pt-BR", {
           day: "2-digit",
@@ -59,11 +64,14 @@ const GroupChatPanelHeader: React.FC<GroupChatPanelHeaderProps> = ({
     <div className=" bg-[#111111] rounded-full flex items-center justify-between">
       <div className="p-1 flex items-center justify-start gap-2">
         <img src="enterpriseicon.png" alt="Group Image" className="max-w-16" />
-        <div className="flex flex-col">
-          <h2 className="text-xl font-bold text-white">{selectedGroup.name}</h2>
-          <p className="text-gray-400 cursor-pointer">
-            clique para mostrar dados do grupo
-          </p>
+        <div className="flex flex-col items-start justify-center">
+          <h2 className="text-xl font-bold text-white">
+            {selectedGroup.name} -{" "}
+            {formatCpfOrCnpj(selectedGroup.identifierValue)}
+          </h2>
+          <button className="cursor-pointer" onClick={() => handleShowGroupInfo(selectedGroup)}>
+            <p className="text-gray-400">clique para mostrar dados do grupo</p>
+          </button>
         </div>
       </div>
       <div
@@ -74,10 +82,10 @@ const GroupChatPanelHeader: React.FC<GroupChatPanelHeaderProps> = ({
           className="cursor-pointer p-3 rounded-full  text-white
         hover:text-blue-500 hover:bg-white/10 transition-all duration-300
         flex items-center justify-center gap-1"
-        onClick={() => setShowGroupFiles(!showGroupFiles)}
-        > 
+          onClick={() => setShowGroupFiles(!showGroupFiles)}
+        >
           <span className="text-xl font-semibold">Arquivos</span>
-          <FaArchive className="text-3xl"/>
+          <FaArchive className="text-3xl" />
         </button>
 
         <button

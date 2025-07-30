@@ -116,6 +116,27 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "InfoHubApplication.Controllers.FileController",
+    "Method": "DeleteFile",
+    "RelativePath": "api/v1/files/{groupId}/{fileName}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "groupId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "fileName",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "InfoHubApplication.Controllers.GroupController",
     "Method": "Add",
     "RelativePath": "api/v1/group",
