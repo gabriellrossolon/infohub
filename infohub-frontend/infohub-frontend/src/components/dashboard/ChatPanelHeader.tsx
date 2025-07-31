@@ -25,29 +25,25 @@ const GroupChatPanelHeader: React.FC<GroupChatPanelHeaderProps> = ({
 
   const handleShowGroupInfo = (selectedGroup: any) => {
     setShowGroupOptions(false);
-    const lastMsgTime = parseUtcString(selectedGroup.lastMessageTimestamp);
-    const createdTime = parseUtcString(selectedGroup.creationDate);
+    const groupCreationTime = parseUtcString(selectedGroup.creationDate);
 
     alert(
       "O ID do grupo é: " +
         selectedGroup.id +
+        "\nTelefone Responsável: " +
+        selectedGroup.phone +
+        "\nEmail do Responsável: " +
+        selectedGroup.email +
+        "\nDescrição do grupo: " +
+        selectedGroup.description +
         "\nO tipo de Grupo é: " +
         selectedGroup.identifierType +
         "\nO número de identificação é: " +
         selectedGroup.identifierValue +
         "\nÚltima mensagem enviada foi em: " +
-        (lastMsgTime
-          ? lastMsgTime.toLocaleString("pt-BR", {
-              day: "2-digit",
-              month: "2-digit",
-              year: "numeric",
-              hour: "2-digit",
-              minute: "2-digit",
-            })
-          : "Nenhuma mensagem enviada") +
         "\nGrupo criado em: " +
-        (createdTime
-          ? createdTime.toLocaleString("pt-BR", {
+        (groupCreationTime
+          ? groupCreationTime.toLocaleString("pt-BR", {
               day: "2-digit",
               month: "2-digit",
               year: "numeric",

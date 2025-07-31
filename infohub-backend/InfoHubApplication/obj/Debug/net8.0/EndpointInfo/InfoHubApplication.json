@@ -533,13 +533,28 @@
       "GroupViewModel": {
         "required": [
           "companyId",
+          "description",
+          "email",
           "identifierType",
           "identifierValue",
-          "name"
+          "name",
+          "phone"
         ],
         "type": "object",
         "properties": {
           "name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "phone": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "email": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "description": {
             "minLength": 1,
             "type": "string"
           },

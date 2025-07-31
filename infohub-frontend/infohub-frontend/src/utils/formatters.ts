@@ -39,5 +39,8 @@ export const formatCpfOrCnpj = (value: string, type?: string): string => {
 
 export function parseUtcString(dateString?: string | null): Date | null {
   if (!dateString) return null;
-  return new Date(dateString.replace("Z", ""));
+  if (!dateString.endsWith("Z")) {
+    dateString += "Z";  // adiciona o Z para indicar UTC
+  }
+  return new Date(dateString);
 }

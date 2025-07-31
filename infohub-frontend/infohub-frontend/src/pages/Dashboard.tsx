@@ -37,7 +37,12 @@ const Dashboard = () => {
     );
   });
   const [creatingNewGroup, setCreatingNewGroup] = useState<boolean>(false);
+
+  //Criação de Grupo
   const [newGroupName, setNewGroupName] = useState<string>("");
+  const [newGroupPhone, setNewGroupPhone] = useState<string>("");
+  const [newGroupEmail, setNewGroupEmail] = useState<string>("");
+  const [newGroupDescription, setNewGroupDescription] = useState<string>("");
   const [newGroupIdentifierType, setNewGroupIdentifierType] =
     useState<string>("");
   const [newGroupIdentifierValue, setNewGroupIdentifierValue] =
@@ -124,6 +129,9 @@ const Dashboard = () => {
         },
         body: JSON.stringify({
           name: newGroupName,
+          phone: newGroupPhone,
+          email: newGroupEmail,
+          description: newGroupDescription,
           companyId: userData.companyId,
           identifierType: newGroupIdentifierType,
           identifierValue: newGroupIdentifierValue,
@@ -376,6 +384,12 @@ const Dashboard = () => {
           <CreateGroup
             setNewGroupName={(e) => setNewGroupName(e.target.value)}
             newGroupName={newGroupName}
+            setNewGroupPhone={(e) => setNewGroupPhone(e.target.value)}
+            newGroupPhone={newGroupPhone}
+            setNewGroupEmail={(e) => setNewGroupEmail(e.target.value)}
+            newGroupEmail={newGroupEmail}
+            setNewGroupDescription={(e) => setNewGroupDescription(e.target.value)}
+            newGroupDescription={newGroupDescription}
             handleCreateNewGroup={(e) => handleCreateNewGroup(e)}
             newGroupIdentifierValue={newGroupIdentifierValue}
             setNewGroupIdentifierValue={setNewGroupIdentifierValue}

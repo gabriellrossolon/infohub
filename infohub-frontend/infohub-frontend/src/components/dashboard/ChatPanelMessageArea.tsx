@@ -44,6 +44,8 @@ const GroupChatPanelMessageArea: React.FC<GroupChatPanelMessageAreaProps> = ({
 
     const userData = await getUserDataById(token, groupMessage.userId);
 
+    const messageSendTime = parseUtcString(groupMessage.sendTime);
+
     setActiveMessageId(null);
     alert(
       "O ID da mensagem é: " +
@@ -51,13 +53,15 @@ const GroupChatPanelMessageArea: React.FC<GroupChatPanelMessageAreaProps> = ({
         "\nEnviada por: " +
         userData.name.toUpperCase() +
         "\nMensagem enviada em: " +
-        parseUtcString(groupMessage.sendTime).toLocaleString("pt-BR", {
-          day: "2-digit",
-          month: "2-digit",
-          year: "numeric",
-          hour: "2-digit",
-          minute: "2-digit",
-        })
+        (messageSendTime
+          ? messageSendTime.toLocaleString("pt-BR", {
+              day: "2-digit",
+              month: "2-digit",
+              year: "numeric",
+              hour: "2-digit",
+              minute: "2-digit",
+            })
+          : "A mensagem não tem data de envio")
     );
   };
 
@@ -139,10 +143,13 @@ const GroupChatPanelMessageArea: React.FC<GroupChatPanelMessageAreaProps> = ({
                     </div>
                   )}
                   <span className="text-gray-400 text-sm">
-                    {new Date(groupMessage.sendTime).toLocaleTimeString([], {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}
+                    {parseUtcString(groupMessage.sendTime)?.toLocaleTimeString(
+                      [],
+                      {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      }
+                    )}
                   </span>
                 </div>
               </div>

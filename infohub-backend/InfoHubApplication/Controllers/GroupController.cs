@@ -29,6 +29,9 @@ namespace InfoHubApplication.Controllers
 
             var group = new Group(
                 groupViewModel.Name,
+                groupViewModel.Phone,
+                groupViewModel.Email,
+                groupViewModel.Description,
                 groupViewModel.CompanyId,
                 groupViewModel.IdentifierType,
                 cleanedIdentifier

@@ -1,4 +1,5 @@
 import { FaRegFileArchive, FaFolderPlus, FaMinusCircle } from "react-icons/fa";
+import { useUserRole } from "../../hooks/useUserRole";
 
 interface GroupFilesProps {
   groupFiles: any[];
@@ -13,6 +14,8 @@ const GroupFiles: React.FC<GroupFilesProps> = ({
   handleUploadFile,
   handleDeleteFile,
 }) => {
+  const userRole = useUserRole();
+
   return (
     <div
       className={`bg-white/10 h-full p-2 flex-1 overflow-y-auto no-scrollbar ${
@@ -35,15 +38,18 @@ const GroupFiles: React.FC<GroupFilesProps> = ({
             title={file.fileName}
           >
             <div className="flex-1 flex items-center justify-center relative group">
-              <button
-                className="absolute top-0 right-0 cursor-pointer hidden group-hover:block
+              {(userRole === "admin" || userRole === "manager") && (
+                <button
+                  className="absolute top-0 right-0 cursor-pointer hidden group-hover:block
               hover:text-red-500 text-red-400 transition-colors duration-300"
-              >
-                <FaMinusCircle
-                  className="text-3xl"
-                  onClick={() => handleDeleteFile(file.fileName)}
-                />
-              </button>
+                >
+                  <FaMinusCircle
+                    className="text-3xl"
+                    onClick={() => handleDeleteFile(file.fileName)}
+                  />
+                </button>
+              )}
+
               <FaRegFileArchive
                 className="text-9xl text-gray-100 cursor-pointer"
                 onClick={() => handleDowloadFile(file.fileName)}
