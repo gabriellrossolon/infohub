@@ -3,12 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\Sistema - Asstramed\\Desktop\\Pessoal\\Dev\\1_PROJETOS\\InfoHub\\infohub-backend\\InfoHubApplication\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{191E2E3D-9E35-48CB-943F-F4E981D4C9F6}|InfoHubApplication.csproj|c:\\users\\sistema - asstramed\\desktop\\pessoal\\dev\\1_projetos\\infohub\\infohub-backend\\infohubapplication\\viewmodel\\groupviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{191E2E3D-9E35-48CB-943F-F4E981D4C9F6}|InfoHubApplication.csproj|solutionrelative:viewmodel\\groupviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{191E2E3D-9E35-48CB-943F-F4E981D4C9F6}|InfoHubApplication.csproj|c:\\users\\sistema - asstramed\\desktop\\pessoal\\dev\\1_projetos\\infohub\\infohub-backend\\infohubapplication\\controllers\\groupcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{191E2E3D-9E35-48CB-943F-F4E981D4C9F6}|InfoHubApplication.csproj|solutionrelative:controllers\\groupcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{191E2E3D-9E35-48CB-943F-F4E981D4C9F6}|InfoHubApplication.csproj|c:\\users\\sistema - asstramed\\desktop\\pessoal\\dev\\1_projetos\\infohub\\infohub-backend\\infohubapplication\\models\\igrouprepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{191E2E3D-9E35-48CB-943F-F4E981D4C9F6}|InfoHubApplication.csproj|solutionrelative:models\\igrouprepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{191E2E3D-9E35-48CB-943F-F4E981D4C9F6}|InfoHubApplication.csproj|c:\\users\\sistema - asstramed\\desktop\\pessoal\\dev\\1_projetos\\infohub\\infohub-backend\\infohubapplication\\viewmodel\\groupviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{191E2E3D-9E35-48CB-943F-F4E981D4C9F6}|InfoHubApplication.csproj|solutionrelative:viewmodel\\groupviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{191E2E3D-9E35-48CB-943F-F4E981D4C9F6}|InfoHubApplication.csproj|c:\\users\\sistema - asstramed\\desktop\\pessoal\\dev\\1_projetos\\infohub\\infohub-backend\\infohubapplication\\models\\group.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -17,10 +21,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{191E2E3D-9E35-48CB-943F-F4E981D4C9F6}|InfoHubApplication.csproj|c:\\users\\sistema - asstramed\\desktop\\pessoal\\dev\\1_projetos\\infohub\\infohub-backend\\infohubapplication\\infrastructure\\grouprepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{191E2E3D-9E35-48CB-943F-F4E981D4C9F6}|InfoHubApplication.csproj|solutionrelative:infrastructure\\grouprepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{191E2E3D-9E35-48CB-943F-F4E981D4C9F6}|InfoHubApplication.csproj|c:\\users\\sistema - asstramed\\desktop\\pessoal\\dev\\1_projetos\\infohub\\infohub-backend\\infohubapplication\\models\\igrouprepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{191E2E3D-9E35-48CB-943F-F4E981D4C9F6}|InfoHubApplication.csproj|solutionrelative:models\\igrouprepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,28 +30,27 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 5,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "GroupViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\Sistema - Asstramed\\Desktop\\Pessoal\\Dev\\1_PROJETOS\\InfoHub\\infohub-backend\\InfoHubApplication\\ViewModel\\GroupViewModel.cs",
-              "RelativeDocumentMoniker": "ViewModel\\GroupViewModel.cs",
-              "ToolTip": "C:\\Users\\Sistema - Asstramed\\Desktop\\Pessoal\\Dev\\1_PROJETOS\\InfoHub\\infohub-backend\\InfoHubApplication\\ViewModel\\GroupViewModel.cs",
-              "RelativeToolTip": "ViewModel\\GroupViewModel.cs",
-              "ViewState": "AgIAAAUAAAAAAAAAAAAQwA8AAAASAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-31T20:31:02.773Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
+              "Title": "GroupViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\Sistema - Asstramed\\Desktop\\Pessoal\\Dev\\1_PROJETOS\\InfoHub\\infohub-backend\\InfoHubApplication\\ViewModel\\GroupViewModel.cs",
+              "RelativeDocumentMoniker": "ViewModel\\GroupViewModel.cs",
+              "ToolTip": "C:\\Users\\Sistema - Asstramed\\Desktop\\Pessoal\\Dev\\1_PROJETOS\\InfoHub\\infohub-backend\\InfoHubApplication\\ViewModel\\GroupViewModel.cs",
+              "RelativeToolTip": "ViewModel\\GroupViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-31T20:31:02.773Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "GroupRepository.cs",
               "DocumentMoniker": "C:\\Users\\Sistema - Asstramed\\Desktop\\Pessoal\\Dev\\1_PROJETOS\\InfoHub\\infohub-backend\\InfoHubApplication\\Infrastructure\\GroupRepository.cs",
               "RelativeDocumentMoniker": "Infrastructure\\GroupRepository.cs",
@@ -59,12 +58,11 @@
               "RelativeToolTip": "Infrastructure\\GroupRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-30T19:42:30.137Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-30T19:42:30.137Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "Group.cs",
               "DocumentMoniker": "C:\\Users\\Sistema - Asstramed\\Desktop\\Pessoal\\Dev\\1_PROJETOS\\InfoHub\\infohub-backend\\InfoHubApplication\\Models\\Group.cs",
               "RelativeDocumentMoniker": "Models\\Group.cs",
@@ -72,12 +70,11 @@
               "RelativeToolTip": "Models\\Group.cs",
               "ViewState": "AgIAAAoAAAAAAAAAAAAgwBIAAAA8AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-30T13:35:35.332Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-30T13:35:35.332Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 1,
               "Title": "IGroupRepository.cs",
               "DocumentMoniker": "C:\\Users\\Sistema - Asstramed\\Desktop\\Pessoal\\Dev\\1_PROJETOS\\InfoHub\\infohub-backend\\InfoHubApplication\\Models\\IGroupRepository.cs",
               "RelativeDocumentMoniker": "Models\\IGroupRepository.cs",
@@ -85,18 +82,17 @@
               "RelativeToolTip": "Models\\IGroupRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-30T19:39:38.618Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-30T19:39:38.618Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "GroupController.cs",
               "DocumentMoniker": "C:\\Users\\Sistema - Asstramed\\Desktop\\Pessoal\\Dev\\1_PROJETOS\\InfoHub\\infohub-backend\\InfoHubApplication\\Controllers\\GroupController.cs",
               "RelativeDocumentMoniker": "Controllers\\GroupController.cs",
               "ToolTip": "C:\\Users\\Sistema - Asstramed\\Desktop\\Pessoal\\Dev\\1_PROJETOS\\InfoHub\\infohub-backend\\InfoHubApplication\\Controllers\\GroupController.cs",
               "RelativeToolTip": "Controllers\\GroupController.cs",
-              "ViewState": "AgIAAAsAAAAAAAAAAAAQwB8AAAAlAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAABAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-30T13:42:31.421Z",
               "EditorCaption": ""

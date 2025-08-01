@@ -44,3 +44,32 @@ export function parseUtcString(dateString?: string | null): Date | null {
   }
   return new Date(dateString);
 }
+
+export function formatPhoneNumber(phone?: string | null): string | null {
+  if (!phone) return null;
+
+  const digits = phone.replace(/\D/g, '');
+
+  if (digits.length < 10 || digits.length > 11) {
+    return null;
+  }
+
+  const ddd = digits.slice(0, 2);
+  let numberPart = digits.slice(2);
+
+  if (numberPart.length === 9) {
+    return `(${ddd}) ${numberPart.slice(0, 5)}-${numberPart.slice(5)}`;
+  } else if (numberPart.length === 8) {
+    return `(${ddd}) ${numberPart.slice(0, 4)}-${numberPart.slice(4)}`;
+  }
+
+  return null;
+}
+
+export function nameFormatter(name: string): string {
+  return name
+    .toLowerCase()
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}

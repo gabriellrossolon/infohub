@@ -25,16 +25,21 @@ const Dashboard = () => {
   const [selectedGroup, setSelectedGroup] = useState<any | null>(null);
   const [selectedGroupId, setSelectedGroupId] = useState<number | null>(null);
   const [searchedGroup, setSearchedGroup] = useState<string>("");
-  const normalize = (str: string) => str.replace(/\D/g, "").toLowerCase();
   const filteredGroups = groups.filter((group) => {
-    const normalizedSearch = searchedGroup.toLowerCase();
-    const normalizedIdentifier = normalize(group.identifierValue || "");
-    const normalizedName = (group.name || "").toLowerCase();
+    const search = (searchedGroup || "").toLowerCase();
+    const normalizedSearch = search.replace(/\D/g, "");
 
-    return (
-      normalizedName.includes(normalizedSearch) ||
-      normalizedIdentifier.includes(normalize(searchedGroup))
-    );
+    const name = (group.name || "").toLowerCase();
+    const identifier = (group.identifierValue || "").toLowerCase();
+    const normalizedIdentifier = identifier.replace(/\D/g, "");
+
+    const matchName = name.includes(search);
+    const matchIdentifier =
+      normalizedSearch === ""
+        ? false
+        : normalizedIdentifier.includes(normalizedSearch);
+
+    return matchName || matchIdentifier;
   });
   const [creatingNewGroup, setCreatingNewGroup] = useState<boolean>(false);
 
@@ -65,6 +70,9 @@ const Dashboard = () => {
   const [groupFiles, setGroupFiles] = useState<any>();
   const [showGroupFiles, setShowGroupFiles] = useState<boolean>(false);
 
+  //Informações do Grupo
+  const [showGroupInfo, setShowGroupInfo] = useState<boolean>(false);
+
   // UI e erros
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
@@ -93,6 +101,7 @@ const Dashboard = () => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         handleSelectGroup(null);
+
       }
     };
     window.addEventListener("keydown", handleKeyDown);
@@ -199,6 +208,7 @@ const Dashboard = () => {
       setSelectedGroup(group);
       setSelectedGroupId(group.id);
       setCreatingNewGroup(false);
+      setShowGroupInfo(false);
       setLoading(false);
     }
   };
@@ -388,7 +398,9 @@ const Dashboard = () => {
             newGroupPhone={newGroupPhone}
             setNewGroupEmail={(e) => setNewGroupEmail(e.target.value)}
             newGroupEmail={newGroupEmail}
-            setNewGroupDescription={(e) => setNewGroupDescription(e.target.value)}
+            setNewGroupDescription={(e) =>
+              setNewGroupDescription(e.target.value)
+            }
             newGroupDescription={newGroupDescription}
             handleCreateNewGroup={(e) => handleCreateNewGroup(e)}
             newGroupIdentifierValue={newGroupIdentifierValue}
@@ -401,11 +413,13 @@ const Dashboard = () => {
             selectedGroup={selectedGroup}
             groupMessages={groupMessages}
             groupFiles={groupFiles}
+            showGroupFiles={showGroupFiles}
+            setShowGroupFiles={setShowGroupFiles}
+            showGroupInfo={showGroupInfo}
+            setShowGroupInfo={setShowGroupInfo}
             handleDowloadFile={handleDownloadFile}
             handleUploadFile={handleUploadFile}
             handleDeleteFile={handleDeleteFile}
-            setShowGroupFiles={setShowGroupFiles}
-            showGroupFiles={showGroupFiles}
             handleDeleteGroup={handleDeleteGroup}
             handleSendMessage={handleSendMessage}
             handleDeleteMessage={handleDeleteMessage}

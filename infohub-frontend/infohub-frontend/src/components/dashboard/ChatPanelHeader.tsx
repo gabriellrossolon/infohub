@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { CiCircleInfo, CiTrash } from "react-icons/ci";
 import { FaArchive } from "react-icons/fa";
-import { formatCpfOrCnpj, parseUtcString } from "../../utils/formatters";
+import { formatCpfOrCnpj } from "../../utils/formatters";
 
 interface GroupChatPanelHeaderProps {
   selectedGroup: any;
@@ -10,6 +10,7 @@ interface GroupChatPanelHeaderProps {
   userRole: string | null;
   showGroupFiles: boolean;
   setShowGroupFiles: (value: boolean) => void;
+  setShowGroupInfo: (value: boolean) => void;
 }
 
 const GroupChatPanelHeader: React.FC<GroupChatPanelHeaderProps> = ({
@@ -18,40 +19,15 @@ const GroupChatPanelHeader: React.FC<GroupChatPanelHeaderProps> = ({
   userRole,
   showGroupFiles,
   setShowGroupFiles,
+  setShowGroupInfo,
 }) => {
   const menuRef = useRef<HTMLDivElement>(null);
 
   const [showGroupOptions, setShowGroupOptions] = useState<boolean>(false);
 
-  const handleShowGroupInfo = (selectedGroup: any) => {
+  const handleShowGroupInfo = () => {
     setShowGroupOptions(false);
-    const groupCreationTime = parseUtcString(selectedGroup.creationDate);
-
-    alert(
-      "O ID do grupo é: " +
-        selectedGroup.id +
-        "\nTelefone Responsável: " +
-        selectedGroup.phone +
-        "\nEmail do Responsável: " +
-        selectedGroup.email +
-        "\nDescrição do grupo: " +
-        selectedGroup.description +
-        "\nO tipo de Grupo é: " +
-        selectedGroup.identifierType +
-        "\nO número de identificação é: " +
-        selectedGroup.identifierValue +
-        "\nÚltima mensagem enviada foi em: " +
-        "\nGrupo criado em: " +
-        (groupCreationTime
-          ? groupCreationTime.toLocaleString("pt-BR", {
-              day: "2-digit",
-              month: "2-digit",
-              year: "numeric",
-              hour: "2-digit",
-              minute: "2-digit",
-            })
-          : "Data de criação não disponível")
-    );
+    setShowGroupInfo(true);
   };
 
   useEffect(() => {
@@ -90,7 +66,7 @@ const GroupChatPanelHeader: React.FC<GroupChatPanelHeaderProps> = ({
           </h2>
           <button
             className="cursor-pointer"
-            onClick={() => handleShowGroupInfo(selectedGroup)}
+            onClick={() => handleShowGroupInfo()}
           >
             <p className="text-gray-400">clique para mostrar dados do grupo</p>
           </button>
@@ -125,7 +101,7 @@ const GroupChatPanelHeader: React.FC<GroupChatPanelHeaderProps> = ({
             <button
               className="flex items-center justify-start gap-1 py-2 px-3 rounded-md
           hover:bg-white/10 transition-colors duration-300 w-full cursor-pointer"
-              onClick={() => handleShowGroupInfo(selectedGroup)}
+              onClick={() => handleShowGroupInfo()}
             >
               <CiCircleInfo className="text-2xl" />
               <span className="text-md">Dados do grupo</span>

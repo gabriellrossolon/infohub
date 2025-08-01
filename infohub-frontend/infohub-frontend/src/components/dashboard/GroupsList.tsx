@@ -1,6 +1,6 @@
 import { BiMessageAdd } from "react-icons/bi";
 import { IoMdSearch } from "react-icons/io";
-import { formatCpfOrCnpj } from "../../utils/formatters";
+import { formatCpfOrCnpj, nameFormatter } from "../../utils/formatters";
 
 interface GroupsListProps {
   companyName: string;
@@ -38,8 +38,8 @@ const GroupsList: React.FC<GroupsListProps> = ({
         <h1 className="text-3xl font-bold text-gray-100">
           Info<strong className="text-blue-500">HUB</strong>
         </h1>
-        <h2 className="text-gray-200 text-center tracking-wide uppercase">
-          {userName + " - " + companyName}
+        <h2 className="text-gray-200 text-center tracking-wide">
+          {nameFormatter(userName) + " - " + companyName.toUpperCase()}
         </h2>
         <button
           className="absolute top-2 right-2 text-white/80 

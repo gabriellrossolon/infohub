@@ -3,16 +3,19 @@ import GroupChatPanelMessageInput from "./ChatPanelMessageInput";
 import GroupChatPanelHeader from "./ChatPanelHeader";
 import { useUserRole } from "../../hooks/useUserRole";
 import GroupFiles from "./GroupFiles";
+import GroupInformations from "./GroupInformations";
 
 interface GroupChatPanelProps {
   selectedGroup: any;
   groupMessages: any[];
   groupFiles: any[];
   showGroupFiles: boolean;
+  setShowGroupFiles: (value: boolean) => void;
+  showGroupInfo: boolean;
+  setShowGroupInfo: (value: boolean) => void;
   handleDowloadFile: (fileName: string) => void;
   handleUploadFile: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleDeleteFile: (fileName: string) => void;
-  setShowGroupFiles: (value: boolean) => void;
   handleDeleteGroup: (groupId: number) => void;
   handleSendMessage: (e: React.FormEvent<HTMLFormElement>) => void;
   handleDeleteMessage: (messageId: number) => void;
@@ -30,10 +33,12 @@ const GroupChatPanel: React.FC<GroupChatPanelProps> = ({
   groupMessages,
   groupFiles,
   showGroupFiles,
+  setShowGroupFiles,
+  showGroupInfo,
+  setShowGroupInfo,
   handleDowloadFile,
   handleUploadFile,
   handleDeleteFile,
-  setShowGroupFiles,
   handleDeleteGroup,
   handleSendMessage,
   handleDeleteMessage,
@@ -56,6 +61,7 @@ const GroupChatPanel: React.FC<GroupChatPanelProps> = ({
         userRole={userRole ?? null}
         showGroupFiles={showGroupFiles}
         setShowGroupFiles={setShowGroupFiles}
+        setShowGroupInfo={setShowGroupInfo}
       />
       {showGroupFiles ? (
         <GroupFiles
@@ -64,8 +70,13 @@ const GroupChatPanel: React.FC<GroupChatPanelProps> = ({
           handleUploadFile={handleUploadFile}
           handleDeleteFile={handleDeleteFile}
         />
+      ) : showGroupInfo ? (
+        <GroupInformations 
+          selectedGroup={selectedGroup}
+          setShowGroupInfo={setShowGroupInfo}
+        />
       ) : (
-        <div className="flex flex-col h-full">
+        <div className="flex flex-col h-full overflow-hidden">
           {/* Área de Mensagens */}
           <GroupChatPanelMessageArea
             groupMessages={groupMessages}
